@@ -1,0 +1,197 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[german]{babel}
+\setlength{\parindent}{0cm}
+\usepackage{setspace}
+\usepackage{mathpazo}
+\usepackage{graphicx}
+\usepackage{wasysym} 
+\usepackage{booktabs}
+\usepackage{verbatim}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage{ulem}
+\usepackage{stmaryrd }
+\usepackage[a4paper,
+left=1.8cm, right=1.8cm,
+top=2.0cm, bottom=2.0cm]{geometry}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usetikzlibrary{trees,petri,decorations,arrows,automata,shapes,shadows,positioning,plotmarks}
+
+\newcommand{\rf}{\right\rfloor}
+\newcommand{\lf}{\left\lfloor}
+\newcommand{\tabspace}{15cm}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\begin{document}
+\begin{center}
+\Large{Grundlagen der künstlichen Intelligenz: Hausaufgabe 1} \\
+\end{center}
+\begin{tabbing}
+Tom Nick \hspace{2cm}\= - 340528\\
+Niklas Gebauer \> - 340942 \\
+\end{tabbing}
+
+\section*{Aufgabe 1}
+
+\begin{enumerate}[~~a)]
+	% Suchproblem
+	\item
+	\textbf{Zustandsraum:} 
+	$(a, b, c)$ wobei $ a \in \{0,\dots,100\}, b \in \N, c \in \{A, B, C, Z, i, j\} $ \\
+	wobei a die aktuelle Position, b die benötigte Zeit und c den Ladezustand beschreibt. \\
+	\textbf{Anfangszustand:}
+	$(A,0,100)$ \\
+	\textbf{Zielzustand:}
+	$(Z,b,c)$ wobei $c \ge 50$ und $b$ minimal ist. \\
+	\textbf{Aktionen:}
+	\begin{enumerate}[~~1.]
+	\item $$\textsf{fahren}(start, ziel, zeit, energie): (a, b, c) \rightarrow (x, y, z)$$ 
+	mit 
+	\begin{align*}
+		a = start &\land x = ziel ~\land \\
+		z = c - energie  &\land z \ge 0 ~\land y = b + zeit ~\land\\
+		(start, ziel, zeit, energie)  \in \{&(A, Z, 170, 95), (Z, A, 170, 95),\\
+		&(A,i,100,50), (i,A,100,50),\\
+		&(i,Z,200,100), (Z,i,200,100),\\
+		&(i,j,100,50), (j,i,100,50),\\
+		&(i,B,80,45), (B,i,80,45),\\
+		&(j,Z,80,40), (Z,j,80,40),\\
+		&(j,C,25,20), (C,j,25,20),\\
+		&(Z,C,20,10), (Z,C,20,10)\}
+	\end{align*}
+	\item $$\textsf{laden}(zustand): (a, b, c) \rightarrow (x, y, z)$$ 
+	mit 
+	\begin{align*}
+		zustand \in \{ i, j \} &\land y = b + 200 \land z = 100 \land zustand = a = x
+	\end{align*}
+	\end{enumerate}
+
+	% Charakteristika des Suchbaum-
+	\item \textbf{Verzweigungsgrad:} maximal 3 \\
+	\textbf{Tiefe:} 6 wenn man sich beim Suchen intelligent anstellt. Wobei das beudeutet, dass wir einen Knoten nur 2x besuchen wenn im zweiten Besuch des Knotens die Ladung größer ist als beim ersten Besuch.
+
+	% Suchverfahren
+	\item
+	Da wir den schnellsten Weg Finden wollen wäre eine Breitensuche am besten geeignet.
+	% Simulation
+	\item ~\\
+	\begin{enumerate}[1.]
+		\item ~\\
+		\begin{center}
+			\begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
+				% Zustaende
+				\node[state, rectangle]	(1)	{(A,0,100)};
+			\end{tikzpicture}
+		\end{center}
+		\item ~\\
+		\begin{center}
+			\begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
+				% Zustaende
+				\node[state, rectangle]	(1)	{(A,0,100)};
+				\node[state, rectangle] (2)[below right of=1] {(i, 100, 50)};
+				\node[state, rectangle] (3)[below left of=1] {(Z, 170, 5)};
+
+				\path[->, bend left] (1) edge node {} (2);
+				\path[->, bend right] (1) edge node {} (3);
+			\end{tikzpicture}
+		\end{center}
+		\item ~\\
+		\begin{center}
+			\begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
+				% Zustaende
+				\node[state, rectangle]	(1)	{(A,0,100)};
+
+				\node[state, rectangle] (2)[below right of=1] {(i, 100, 50)};
+				\node[state, rectangle] (3)[below left of=1] {(Z, 170, 5)};
+
+				\node[state, rectangle] (4)[below of=2] {(i, 300, 100)};
+				\node[state, rectangle] (5)[left of=4] {(B, 180, 5)};
+				\node[state, rectangle] (6)[right of=4] {(j, 200, 0)};
+
+				\path[->, bend left] (1) edge node {} (2);
+				\path[->, bend right] (1) edge node {} (3);
+
+				\path[->] (2) edge node {} (4);
+				\path[->, bend right] (2) edge node {} (5);
+				\path[->, bend left] (2) edge node {} (6);
+			\end{tikzpicture}
+		\end{center}
+		\item Die dritte und vierte Expansion von dem Knoten (Z,170,5) und (B,180,5) bewirken keine Veränderung des Baumes, da Sie keine Nachfolger haben. (Energie reicht nicht aus um zu einem anderen Knoten zu fahren)
+		\item ~\\
+		\begin{center}
+			\begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
+				% Zustaende
+				\node[state, rectangle]	(1)	{(A,0,100)};
+
+				\node[state, rectangle] (2)[below right of=1] {(i, 100, 50)};
+				\node[state, rectangle] (3)[below left of=1] {(Z, 170, 5)};
+
+				\node[state, rectangle] (4)[below of=2] {(i, 300, 100)};
+				\node[state, rectangle] (5)[left of=4] {(B, 180, 5)};
+				\node[state, rectangle] (6)[right of=4] {(j, 200, 0)};
+
+				\node[state, rectangle] (7)[below right of=6] {(j, 400, 100)};
+
+				\path[->, bend left] (1) edge node {} (2);
+				\path[->, bend right] (1) edge node {} (3);
+
+				\path[->] (2) edge node {} (4);
+				\path[->, bend right] (2) edge node {} (5);
+				\path[->, bend left] (2) edge node {} (6);
+
+				\path[->, bend left] (6) edge node {} (7);
+			\end{tikzpicture}
+		\end{center}
+		\item ~\\
+			\begin{center}
+				\begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
+					% Zustaende
+					\node[state, rectangle]	(1)	{(A,0,100)};
+
+					\node[state, rectangle] (2)[below right of=1] {(i, 100, 50)};
+					\node[state, rectangle] (3)[below left of=1] {(Z, 170, 5)};
+
+					\node[state, rectangle] (4)[below of=2] {(i, 300, 100)};
+					\node[state, rectangle] (5)[left of=4] {(B, 180, 5)};
+					\node[state, rectangle] (6)[right of=4] {(j, 200, 0)};
+
+
+					\node[state, rectangle] (8)[below of=4] {(B, 380, 55)};
+					\node[state, rectangle] (9)[right of=8] {(j, 400, 50)};
+					\node[state, rectangle] (10)[left of=8] {(Z, 500, 0)};
+
+					\node[state, rectangle] (7)[right of=9] {(j, 400, 100)};
+					\path[->, bend left] (1) edge node {} (2);
+					\path[->, bend right] (1) edge node {} (3);
+
+					\path[->] (2) edge node {} (4);
+					\path[->, bend right] (2) edge node {} (5);
+					\path[->, bend left] (2) edge node {} (6);
+
+					\path[->, bend left] (6) edge node {} (7);
+
+					\path[->] (4) edge node {} (8);
+					\path[->, bend right] (4) edge node {} (9);
+					\path[->, bend left] (4) edge node {} (10);
+				\end{tikzpicture}
+			\end{center}
+	\end{enumerate}
+
+	% dynamische Programmierung
+	\item 
+\end{enumerate}
+
+\section*{Aufgabe 2}
+
+\section*{Aufgabe 3}
+
+\section*{Aufgabe 4}
+
+
+\end{document}
