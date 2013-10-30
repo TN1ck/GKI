@@ -48,7 +48,7 @@ Niklas Gebauer \> - 340942 \\
 	\textbf{Anfangszustand:}
 	$(A,0,100)$ \\
 	\textbf{Zielzustand:}
-	$(Z,b,c)$ wobei $c \ge 50$ und $b$ minimal ist. \\
+	$(Z,b,c)$ wobei $c \ge 50$, $b$ hat keine Einschränkung.
 	\textbf{Aktionen:}
 	\begin{enumerate}[~~1.]
 	\item $$\textsf{fahren}(start, ziel, zeit, energie): (a, b, c) \rightarrow (x, y, z)$$ 
@@ -78,7 +78,7 @@ Niklas Gebauer \> - 340942 \\
 
 	% Suchverfahren
 	\item
-	Da wir den schnellsten Weg Finden wollen wäre eine Breitensuche am besten geeignet.
+	Da wir den schnellsten Weg Finden wollen wäre \textbf{Branch and Bound} am besten, wir haben keine Heuristiken, also kein A*, wir haben aber Pfadkosten also keine BFS/DFS.
 	% Simulation
 	\item ~\\
 	\begin{enumerate}[1.]
@@ -184,10 +184,34 @@ Niklas Gebauer \> - 340942 \\
 	\end{enumerate}
 
 	% dynamische Programmierung
-	\item 
+	\item
+	Algorithmen der dynamischen Programmierung werden genutzt um optimale Lösungen zu finden, in dem Beispiel hier wollen wir den kleinstmöglichsten Weg von $A$ nach $Z$ finden, wobei die verbleibende Energie größer gleich 50 ist. Dafür werden ALLE möglichen Wege untersucht, viele werden jedoch von vornerein ausgeschlossen (eine Art intelligentes Brute Force). In diesem Beispiel benutzen wir Branch and Bound. Dieser Algorithmus untersucht als nächsten Knoten immer den mit den niedrigsten insgesamten Pfadkosten, dadurch werden gleichzeitig viele unnütze Wege, Schleifen... ausgeschlossen. 
 \end{enumerate}
 
 \section*{Aufgabe 2}
+\begin{enumerate}[~~a)]
+	\item 
+	\textbf{Zustandsraum:} 
+	$((w_1, x_1, y_1), (w_2, x_2, y_2), (w_3, x_3, y_3), (w_4, x_4, y_4), (w_5, x_5, y_5))$ wobei $ x_i, y_i \in \{ (a, b) \mid a \in \{1,\dots,5\}, b \in \{1,\dots,5\}\} \text{ mit }i \in \{1,\dots,5\}$ \\
+	Wir können maximal 5 Stapel bilden, da wir 5 Kisten haben. Jede Kiste wird beschrieben durch ein Tupel von $x$ und $y$ welche den Stapel sowie die Höhe in diesem Stapel beschreiben.$w_1$ beschreibt den Wert der Kiste, man könnte auch die Reihenfolge dafür benutzen, aber dadurch werden die Formalitäten kniffliger.
+	\textbf{Anfangszustand:}
+	$((1,1,2),(2,1,1),(3,1,4),(4,1,3),(5,1,5))$ \\
+	\textbf{Zielzustand:}
+	$((1,x_1,5),(2,x_2,4),(3,x_3,3),(4,x_4,2),(5,x_5,1))$ mit $x_1 = x_2 \land x_2 = x_3 \land x_3 = x_4 \land x_4 = x_5$\\
+	\textbf{Aktionen:}
+	\begin{enumerate}[~~1.]
+	\item $$\textsf{bewegen}(): (von, nach, (w_1,x_1, y_1), (w_2,x_2, y_2), (w_3,x_3, y_3), (w_4,x_4, y_4), (w_5,x_5, y_5)) \rightarrow (c_1, a_1, b_1), (c_2, a_2, b_2), (c_3, a_3, b_3), (c_4, a_4, b_4), (c_5, a_5, b_5))$$ 
+	mit 
+	\begin{enumerate}[~~1.]
+		\item Es gibt $x_i$ mit $i \in \{1,\dots,5\}$ sodass $von = i$.
+		\item Sei $\phi = (von,x, y_i)$ mit $i \in \{1,\dots,5\}$ und $i$ maximal. D.h. es darf kein $(von, x, y_i)$ existieren mit $y_i > \phi_2$. Sei $\lambda = (nach, x, y_i)$ mit $i \in \{1,\dots,5\}$ und $i$ maximal. D.h. es darf kein $(nach, x, y_i)$ existieren mit $y_i > \lambda_2$. Es muss gelten:
+		$$(a_{\phi_2}, a_{\phi_2}, a_{\phi_2}) = (\phi_1,nach, \lambda_3 + 1)$$
+		Alle anderen Werte ändern sich nicht.
+	\end{enumerate}
+	\end{enumerate}
+	\item Eine Heuristik ist:
+	
+\end{enumerate}
 
 \section*{Aufgabe 3}
 
