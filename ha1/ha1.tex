@@ -214,6 +214,28 @@ Niklas Gebauer \> - 340942 \\
 \end{enumerate}
 
 \section*{Aufgabe 3}
+\begin{enumerate}[~~a)]
+	\item
+	Die iterative Tiefensuche vereint die Vorteile von Tiefen- und Breitensuche. Es handelt sich ebenfalls um eine uninformierte Suche, die für Probleme mit uniformen Aktionskosten die Optimalität der Breitensuche und den geringen Speicherverbrauch der Tiefensuche vereint. Im Gegensatz zu normalen Tiefensuche ist sie auch Vollständig für Suchbäume mit unendlich langen Pfaden. \\
+Dies wird dadurch erreicht, dass in jedem Iterationsschrit eine Tiefensuche bis zu einer begrenzten Tiefe ausgeführt wird. Nach jedem Iterationsschritt wird diese Tiefe um 1 erhöht. Damit werden beispielsweise, wenn man bei der Tiefe 0 anfängt, erst alle Knoten, die über Pfade der Länge 0 erreichtw erden können untersucht. Dann alle Knoten, die über Pfade der Länge 1 erreicht werden können und so weiter. \\
+Dadurch, dass jedes Mal eine Tiefensuche stattfindet, ist der Speicherbedarf gering, da immer nur der aktuell betrachtete Ast im Speicher gehalten werden muss. Durch die Begrenzung der Tiefe wird, sofern eine Lösung vorhanden ist, wie bei der Breitensuche bei uniformen Aktionskosten auch eine Lösung auf der niedrigsten Tiefe gefunden, auf der Lösungen gefunden werden können. Wenn mehrere Lösungen auf dieser Ebene existieren, ist es egal, welche von diesen wir finden, da alle die gleichen Kosten haben. \\
+
+	\item
+	Beim vollständigen Durchsuchen des Baumes müssen der Wurzelknoten 6 Mal (also die Tiefe+1), alle Knoten der Tiefe 1 5 Mal, alle Knoten der Tiefe 2 4 Mal usw. generiert werden. Es ergibt sich also folgende Rechnung:
+	$$ 6*1 + 5*35 + 4*35^2 + 3*35^3 + 2*35^4 + 35^5 = 55 656 831 $$\\
+	
+	Bei der normalen Tiefensuche wird jeder Knoten genau ein mal generiert, wir haben also:
+	
+	$$ 1 + 35 + 35^2 + 35^3 + 35^4 + 35^5 = 54 066 636$$
+	
+	Insgesamt haben wir in diesem Fall bei der iterativen Tiefensuche also nur einen Overhead von ungefähr 3 Prozent:
+	
+	$$55656831/54066636 = 1.029411761$$
+
+	\item
+	Je höher der Verzweigungsfaktor ist (solange er nicht unendlich ist), desto geringer ist der prozentuale Overhead der iterativen Tiefensuche, denn die Anzahl der Blätter wächst mit einer Vergrößerung des Verzweigungsfaktors sehr stark. Die Blätter machen den größten Teil des Suchbaumes aus und werden sowohl bei der Tiefensuche als auch bei der iterativen Tiefensuche nur einmal generiert. Die mehrfache Generierung der Knoten geringerer Tiefen fällt bei einem hohen Verzweigungsfaktor also nicht so sehr ins Gewicht, wie bei einem niedrigen Verzweigungsfaktor, da der Unterschied der Anzahl an Knoten zweier Tiefen bei großem Verzweigungsfaktor wesentlich höher ist.\\
+	So sind bei einem Verzweigungsfaktor von 2 beispielsweise immer doppelt so viele Knoten in der nächst tieferen Ebene, wie in der Ebene darüber. Beim Verzweigungsfaktor 5 sind es hingegen schon fünf Mal so viele Knoten.
+\end{enumerate}
 
 \section*{Aufgabe 4}
 
