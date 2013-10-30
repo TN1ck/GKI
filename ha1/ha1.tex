@@ -48,7 +48,7 @@ Niklas Gebauer \> - 340942 \\
 	\textbf{Anfangszustand:}
 	$(A,0,100)$ \\
 	\textbf{Zielzustand:}
-	$(Z,b,c)$ wobei $c \ge 50$ und $b$ minimal ist. \\
+	$(Z,b,c)$ wobei $c \ge 50$, $b$ hat keine Einschränkung.
 	\textbf{Aktionen:}
 	\begin{enumerate}[~~1.]
 	\item $$\textsf{fahren}(start, ziel, zeit, energie): (a, b, c) \rightarrow (x, y, z)$$ 
@@ -78,7 +78,7 @@ Niklas Gebauer \> - 340942 \\
 
 	% Suchverfahren
 	\item
-	Da wir den schnellsten Weg Finden wollen wäre eine Breitensuche am besten geeignet.
+	Da wir den schnellsten Weg Finden wollen wäre \textbf{Branch and Bound} am besten, wir haben keine Heuristiken, also kein A*, wir haben aber Pfadkosten also keine BFS/DFS.
 	% Simulation
 	\item ~\\
 	\begin{enumerate}[1.]
@@ -184,7 +184,8 @@ Niklas Gebauer \> - 340942 \\
 	\end{enumerate}
 
 	% dynamische Programmierung
-	\item 
+	\item
+	Algorithmen der dynamischen Programmierung werden genutzt um optimale Lösungen zu finden, in dem Beispiel hier wollen wir den kleinstmöglichsten Weg von $A$ nach $Z$ finden, wobei die verbleibende Energie größer gleich 50 ist. Dafür werden ALLE möglichen Wege untersucht, viele werden jedoch von vornerein ausgeschlossen (eine Art intelligentes Brute Force). In diesem Beispiel benutzen wir Branch and Bound. Dieser Algorithmus untersucht als nächsten Knoten immer den mit den niedrigsten insgesamten Pfadkosten, dadurch werden gleichzeitig viele unnütze Wege, Schleifen... ausgeschlossen. 
 \end{enumerate}
 
 \section*{Aufgabe 2}
