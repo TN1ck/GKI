@@ -7,6 +7,7 @@
 \setlength{\parindent}{0cm}
 \usepackage{setspace}
 \usepackage{mathpazo}
+\usepackage{listings}
 \usepackage{graphicx}
 \usepackage{wasysym} 
 \usepackage{booktabs}
@@ -40,201 +41,220 @@ Niklas Gebauer \> - 340942 \\
 \section*{Aufgabe 1}
 
 \begin{enumerate}[~~a)]
-	% Suchproblem
-	\item
-	\textbf{Zustandsraum:} 
-	$(a, b, c)$ wobei $ a \in \{0,\dots,100\}, b \in \N, c \in \{A, B, C, Z, i, j\} $ \\
-	wobei a die aktuelle Position, b die benötigte Zeit und c den Ladezustand beschreibt. \\
-	\textbf{Anfangszustand:}
-	$(A,0,100)$ \\
-	\textbf{Zielzustand:}
-	$(Z,b,c)$ wobei $c \ge 50$, $b$ hat keine Einschränkung.
-	\textbf{Aktionen:}
-	\begin{enumerate}[~~1.]
-	\item $$\textsf{fahren}(start, ziel, zeit, energie): (a, b, c) \rightarrow (x, y, z)$$ 
-	mit 
-	\begin{align*}
-		a = start &\land x = ziel ~\land \\
-		z = c - energie  &\land z \ge 0 ~\land y = b + zeit ~\land\\
-		(start, ziel, zeit, energie)  \in \{&(A, Z, 170, 95), (Z, A, 170, 95),\\
-		&(A,i,100,50), (i,A,100,50),\\
-		&(i,Z,200,100), (Z,i,200,100),\\
-		&(i,j,100,50), (j,i,100,50),\\
-		&(i,B,80,45), (B,i,80,45),\\
-		&(j,Z,80,40), (Z,j,80,40),\\
-		&(j,C,25,20), (C,j,25,20),\\
-		&(Z,C,20,10), (Z,C,20,10)\}
-	\end{align*}
-	\item $$\textsf{laden}(zustand): (a, b, c) \rightarrow (x, y, z)$$ 
-	mit 
-	\begin{align*}
-		zustand \in \{ i, j \} &\land y = b + 200 \land z = 100 \land zustand = a = x
-	\end{align*}
-	\end{enumerate}
+    % Suchproblem
+    \item
+    \textbf{Zustandsraum:} 
+    $(a, b)$ wobei $ a \in \{A, B, C, Z, i, j\}, b \in \{0,\dots,100\} $ \\
+    wobei a die aktuelle Position und b den Ladezustand beschreibt. \\
+    \textbf{Anfangszustand:}
+    $(A,100)$ \\
+    \textbf{Zielzustand:}
+    $(Z,c)$ wobei $c \ge 50$. \\
+    \textbf{Aktionen:}
+    \begin{enumerate}[~~1.]
+    \item $$\textsf{fahren}(start, ziel, energie): (a, b) \rightarrow (x, y)$$ 
+    mit 
+    \begin{align*}
+        a = start &\land x = ziel ~\land \\
+        y = b - energie  &\land y \ge 0 ~\land\\
+        (start, ziel, energie)  \in \{&(A, Z, 95), (Z, A, 95),\\
+        &(A,i,50), (i,A,50),\\
+        &(i,Z,100), (Z,i,100),\\
+        &(i,j,50), (j,i,50),\\
+        &(i,B,45), (B,i,45),\\
+        &(j,Z,40), (Z,j,40),\\
+        &(j,C,20), (C,j,20),\\
+        &(Z,C,10), (Z,C,10)\}
+    \end{align*}
+    \item $$\textsf{laden}(zustand): (a, b) \rightarrow (x, y)$$ 
+    mit 
+    \begin{align*}
+        zustand \in \{ i, j \} \land y = 100 \land zustand = a = x
+    \end{align*}
+    \end{enumerate}
+    \textbf{Aktionskosten:} \\
+    $$\textsf{kosten}(aktion): Aktion(args) \rightarrow \mathbb R_{\ge 0}$$\\   mit
+    \begin{align*}
+    \textsf{fahren}(A,i,50), \textsf{fahren}(i,A,50), \textsf{fahren}(i,j,50), \textsf{fahren}(j,i,50) &\mapsto 100\\
+    \textsf{fahren}(i,Z,100), \textsf{fahren}(Z,i,100),\textsf{laden}(i), \textsf{laden}(j) &\mapsto 200\\
+    \textsf{fahren}(A,Z,95), \textsf{fahren}(Z,A,95) &\mapsto 170\\
+    \textsf{fahren}(i,B,45), \textsf{fahren}(B,i,45), \textsf{fahren}(j,Z,40), \textsf{fahren}(Z,j,40) &\mapsto 80\\
+    \textsf{fahren}(j,C,20), \textsf{fahren}(C,j,20) &\mapsto 25\\
+    \textsf{fahren}(Z,C,10), \textsf{fahren}(C,Z,10) &\mapsto 20
+    \end{align*}
 
-	% Charakteristika des Suchbaum-
-	\item \textbf{Verzweigungsgrad:} maximal 3 \\
-	\textbf{Tiefe:} 6 wenn man sich beim Suchen intelligent anstellt. Wobei das beudeutet, dass wir einen Knoten nur 2x besuchen wenn im zweiten Besuch des Knotens die Ladung größer ist als beim ersten Besuch.
+    % Charakteristika des Suchbaum-
+    \item \textbf{Verzweigungsgrad:} maximal 3 \\
+    \textbf{Tiefe:} 6 wenn man sich beim Suchen intelligent anstellt. Wobei das beudeutet, dass wir einen Knoten nur 2x besuchen wenn im zweiten Besuch des Knotens die Ladung größer ist als beim ersten Besuch.
 
-	% Suchverfahren
-	\item
-	Da wir den schnellsten Weg Finden wollen wäre \textbf{Branch and Bound} am besten, wir haben keine Heuristiken, also kein A*, wir haben aber Pfadkosten also keine BFS/DFS.
-	% Simulation
-	\item ~\\
-	\begin{enumerate}[1.]
-		\item ~\\
-		\begin{center}
-			\begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
-				% Zustaende
-				\node[state, rectangle]	(1)	{(A,0,100)};
-			\end{tikzpicture}
-		\end{center}
-		\item ~\\
-		\begin{center}
-			\begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
-				% Zustaende
-				\node[state, rectangle]	(1)	{(A,0,100)};
-				\node[state, rectangle] (2)[below right of=1] {(i, 100, 50)};
-				\node[state, rectangle] (3)[below left of=1] {(Z, 170, 5)};
+    % Suchverfahren
+    \item
+    Da wir den schnellsten Weg finden wollen und nicht uniforme Aktionskosten haben, wäre 'Branch \& Bound' am besten als Suchalgorithmus geeignet.
+    % Simulation
+    \item ~\\
+    \begin{enumerate}[1.]
+        \item ~\\
+        \begin{center}
+            \begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
+                % Zustaende
+                \node[state, rectangle] (1) {(A,100)};
+            \end{tikzpicture}
+        \end{center}
+        \item ~\\
+        \begin{center}
+            \begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
+                % Zustaende
+                \node[state, rectangle] (1) {(A,100)};
+                \node[state, rectangle] (2)[below right of=1] {(i, 50)};
+                \node[state, rectangle] (3)[below left of=1] {(Z, 5)};
 
-				\path[->, bend left] (1) edge node {} (2);
-				\path[->, bend right] (1) edge node {} (3);
-			\end{tikzpicture}
-		\end{center}
-		\item ~\\
-		\begin{center}
-			\begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
-				% Zustaende
-				\node[state, rectangle]	(1)	{(A,0,100)};
+                \path[->, bend left] (1) edge node {100} (2);
+                \path[->, bend right] (1) edge node {170} (3);
+            \end{tikzpicture}
+        \end{center}
+        \item ~\\
+        \begin{center}
+            \begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
+                % Zustaende
+                \node[state, rectangle] (1) {(A,100)};
 
-				\node[state, rectangle] (2)[below right of=1] {(i, 100, 50)};
-				\node[state, rectangle] (3)[below left of=1] {(Z, 170, 5)};
+                \node[state, rectangle] (2)[below right of=1] {(i, 50)};
+                \node[state, rectangle] (3)[below left of=1] {(Z, 5)};
 
-				\node[state, rectangle] (4)[below of=2] {(i, 300, 100)};
-				\node[state, rectangle] (5)[left of=4] {(B, 180, 5)};
-				\node[state, rectangle] (6)[right of=4] {(j, 200, 0)};
+                \node[state, rectangle] (4)[below of=2] {(i, 100)};
+                \node[state, rectangle] (5)[left of=4] {(B, 5)};
+                \node[state, rectangle] (6)[right of=4] {(j, 0)};
 
-				\path[->, bend left] (1) edge node {} (2);
-				\path[->, bend right] (1) edge node {} (3);
+                \path[->, bend left] (1) edge node {100} (2);
+                \path[->, bend right] (1) edge node {170} (3);
 
-				\path[->] (2) edge node {} (4);
-				\path[->, bend right] (2) edge node {} (5);
-				\path[->, bend left] (2) edge node {} (6);
-			\end{tikzpicture}
-		\end{center}
-		\item Die dritte und vierte Expansion von dem Knoten (Z,170,5) und (B,180,5) bewirken keine Veränderung des Baumes, da Sie keine Nachfolger haben. (Energie reicht nicht aus um zu einem anderen Knoten zu fahren)
-		\item ~\\
-		\begin{center}
-			\begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
-				% Zustaende
-				\node[state, rectangle]	(1)	{(A,0,100)};
+                \path[->] (2) edge node {200} (4);
+                \path[->, bend right] (2) edge node {80} (5);
+                \path[->, bend left] (2) edge node {100} (6);
+            \end{tikzpicture}
+        \end{center}
+        \item Die dritte und vierte Expansion von dem Knoten (Z,5) und (B,5) bewirken keine Veränderung des Baumes, da Sie keine Nachfolger haben. (Energie reicht nicht aus um zu einem anderen Knoten zu fahren)
+        \item ~\\
+        \begin{center}
+            \begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
+                % Zustaende
+                \node[state, rectangle] (1) {(A,100)};
 
-				\node[state, rectangle] (2)[below right of=1] {(i, 100, 50)};
-				\node[state, rectangle] (3)[below left of=1] {(Z, 170, 5)};
+                \node[state, rectangle] (2)[below right of=1] {(i, 50)};
+                \node[state, rectangle] (3)[below left of=1] {(Z, 5)};
 
-				\node[state, rectangle] (4)[below of=2] {(i, 300, 100)};
-				\node[state, rectangle] (5)[left of=4] {(B, 180, 5)};
-				\node[state, rectangle] (6)[right of=4] {(j, 200, 0)};
+                \node[state, rectangle] (4)[below of=2] {(i, 100)};
+                \node[state, rectangle] (5)[left of=4] {(B, 5)};
+                \node[state, rectangle] (6)[right of=4] {(j, 0)};
 
-				\node[state, rectangle] (7)[below right of=6] {(j, 400, 100)};
+                \node[state, rectangle] (7)[below right of=6] {(j, 100)};
 
-				\path[->, bend left] (1) edge node {} (2);
-				\path[->, bend right] (1) edge node {} (3);
+                \path[->, bend left] (1) edge node {100} (2);
+                \path[->, bend right] (1) edge node {170} (3);
 
-				\path[->] (2) edge node {} (4);
-				\path[->, bend right] (2) edge node {} (5);
-				\path[->, bend left] (2) edge node {} (6);
+                \path[->] (2) edge node {200} (4);
+                \path[->, bend right] (2) edge node {80} (5);
+                \path[->, bend left] (2) edge node {100} (6);
 
-				\path[->, bend left] (6) edge node {} (7);
-			\end{tikzpicture}
-		\end{center}
-		\item ~\\
-			\begin{center}
-				\begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
-					% Zustaende
-					\node[state, rectangle]	(1)	{(A,0,100)};
+                \path[->, bend left] (6) edge node {200} (7);
+            \end{tikzpicture}
+        \end{center}
+        \item ~\\
+            \begin{center}
+                \begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
+                    % Zustaende
+                    \node[state, rectangle] (1) {(A,100)};
 
-					\node[state, rectangle] (2)[below right of=1] {(i, 100, 50)};
-					\node[state, rectangle] (3)[below left of=1] {(Z, 170, 5)};
+                    \node[state, rectangle] (2)[below right of=1] {(i, 50)};
+                    \node[state, rectangle] (3)[below left of=1] {(Z, 5)};
 
-					\node[state, rectangle] (4)[below of=2] {(i, 300, 100)};
-					\node[state, rectangle] (5)[left of=4] {(B, 180, 5)};
-					\node[state, rectangle] (6)[right of=4] {(j, 200, 0)};
+                    \node[state, rectangle] (4)[below of=2] {(i, 100)};
+                    \node[state, rectangle] (5)[left of=4] {(B, 5)};
+                    \node[state, rectangle] (6)[right of=4] {(j, 0)};
 
 
-					\node[state, rectangle] (8)[below of=4] {(B, 380, 55)};
-					\node[state, rectangle] (9)[right of=8] {(j, 400, 50)};
-					\node[state, rectangle] (10)[left of=8] {(Z, 500, 0)};
+                    \node[state, rectangle] (8)[below of=4] {(B, 55)};
+                    \node[state, rectangle] (9)[right of=8] {(j, 50)};
+                    \node[state, rectangle] (10)[left of=8] {(Z, 0)};
 
-					\node[state, rectangle] (7)[right of=9] {(j, 400, 100)};
-					\path[->, bend left] (1) edge node {} (2);
-					\path[->, bend right] (1) edge node {} (3);
+                    \node[state, rectangle] (7)[right of=9] {(j, 100)};
+                    \path[->, bend left] (1) edge node {100} (2);
+                    \path[->, bend right] (1) edge node {170} (3);
 
-					\path[->] (2) edge node {} (4);
-					\path[->, bend right] (2) edge node {} (5);
-					\path[->, bend left] (2) edge node {} (6);
+                    \path[->] (2) edge node {200} (4);
+                    \path[->, bend right] (2) edge node {80} (5);
+                    \path[->, bend left] (2) edge node {100} (6);
 
-					\path[->, bend left] (6) edge node {} (7);
+                    \path[->, bend left] (6) edge node {200} (7);
 
-					\path[->] (4) edge node {} (8);
-					\path[->, bend right] (4) edge node {} (9);
-					\path[->, bend left] (4) edge node {} (10);
-				\end{tikzpicture}
-			\end{center}
-	\end{enumerate}
+                    \path[->] (4) edge node {80} (8);
+                    \path[->, bend left] (4) edge node[left] {100} (9);
+                    \path[->, bend right] (4) edge node {200} (10);
+                \end{tikzpicture}
+            \end{center}
+    \end{enumerate}
 
-	% dynamische Programmierung
-	\item
-	Algorithmen der dynamischen Programmierung werden genutzt um optimale Lösungen zu finden, in dem Beispiel hier wollen wir den kleinstmöglichsten Weg von $A$ nach $Z$ finden, wobei die verbleibende Energie größer gleich 50 ist. Dafür werden ALLE möglichen Wege untersucht, viele werden jedoch von vornerein ausgeschlossen (eine Art intelligentes Brute Force). In diesem Beispiel benutzen wir Branch and Bound. Dieser Algorithmus untersucht als nächsten Knoten immer den mit den niedrigsten insgesamten Pfadkosten, dadurch werden gleichzeitig viele unnütze Wege, Schleifen... ausgeschlossen. 
+    % dynamische Programmierung
+    \item 
+    Die klassische dynamische Programmierung würde, wenn man auf einen Knoten stößt, der schon einmal im Baum vorhanden ist (bei dem sich also das Auto an der gleichen Stelle befindet und die gleiche Ladung aufweist) immer den Knoten bevorzugen, dessen Pfad die geringeren akkumulierten Aktionskosten hat. Dies wird durch eine Tabelle garantiert, die beim Suchen im Speicher gehalten wird und für jeden Zustand (also jede Kombination aus Ladestand und Position) die geringsten Pfadkosten enthält, mit denen dieser Zustand bisher erreicht wurde. Normalerweise verhindert dies Zyklen und das unnötige mehrmalige Untersuchen von Pfaden, wenn diese nicht die optimale Lösung versprechen, da man davon ausgeht, dass die jeweils günstigste Teillösung auch zur günstigsten Gesamtlösung führt. \\
+    In unserem Fall werden trotzdem 'unnötige' Pfade untersucht, wenn man nicht beachtet, dass eine Position bei höheren Pfadkosten (also der Zustand unter Ausklammerung der Ladung) nur sinnvollerweise ein zweites Mal untersucht werden sollte, wenn die Ladung höher ist, als die beim letzten Besuch mit geringeren Pfadkosten. Dies könnte jedoch ohne Probleme und großen Aufwand als Constraint beim Benutzen der dynamischen Programmierung übernommen werden.
 \end{enumerate}
 
 \section*{Aufgabe 2}
 \begin{enumerate}[~~a)]
-	\item 
-	\textbf{Zustandsraum:} 
-	$((w_1, x_1, y_1), (w_2, x_2, y_2), (w_3, x_3, y_3), (w_4, x_4, y_4), (w_5, x_5, y_5))$ wobei $ x_i, y_i \in \{ (a, b) \mid a \in \{1,\dots,5\}, b \in \{1,\dots,5\}\} \text{ mit }i \in \{1,\dots,5\}$ \\
-	Wir können maximal 5 Stapel bilden, da wir 5 Kisten haben. Jede Kiste wird beschrieben durch ein Tupel von $x$ und $y$ welche den Stapel sowie die Höhe in diesem Stapel beschreiben.$w_1$ beschreibt den Wert der Kiste, man könnte auch die Reihenfolge dafür benutzen, aber dadurch werden die Formalitäten kniffliger.
-	\textbf{Anfangszustand:}
-	$((1,1,2),(2,1,1),(3,1,4),(4,1,3),(5,1,5))$ \\
-	\textbf{Zielzustand:}
-	$((1,x_1,5),(2,x_2,4),(3,x_3,3),(4,x_4,2),(5,x_5,1))$ mit $x_1 = x_2 \land x_2 = x_3 \land x_3 = x_4 \land x_4 = x_5$\\
-	\textbf{Aktionen:}
-	\begin{enumerate}[~~1.]
-	\item $$\textsf{bewegen}(): (von, nach, (w_1,x_1, y_1), (w_2,x_2, y_2), (w_3,x_3, y_3), (w_4,x_4, y_4), (w_5,x_5, y_5)) \rightarrow (c_1, a_1, b_1), (c_2, a_2, b_2), (c_3, a_3, b_3), (c_4, a_4, b_4), (c_5, a_5, b_5))$$ 
-	mit 
-	\begin{enumerate}[~~1.]
-		\item Es gibt $x_i$ mit $i \in \{1,\dots,5\}$ sodass $von = i$.
-		\item Sei $\phi = (von,x, y_i)$ mit $i \in \{1,\dots,5\}$ und $i$ maximal. D.h. es darf kein $(von, x, y_i)$ existieren mit $y_i > \phi_2$. Sei $\lambda = (nach, x, y_i)$ mit $i \in \{1,\dots,5\}$ und $i$ maximal. D.h. es darf kein $(nach, x, y_i)$ existieren mit $y_i > \lambda_2$. Es muss gelten:
-		$$(a_{\phi_2}, a_{\phi_2}, a_{\phi_2}) = (\phi_1,nach, \lambda_3 + 1)$$
-		Alle anderen Werte ändern sich nicht.
-	\end{enumerate}
-	\end{enumerate}
-	\item Eine Heuristik ist:
-	
+    \item 
+    \textbf{Zustandsraum:} 
+    $((w_1, x_1, y_1), (w_2, x_2, y_2), (w_3, x_3, y_3), (w_4, x_4, y_4), (w_5, x_5, y_5))$ wobei $ x_i, y_i \in \{ (a, b) \mid a \in \{1,\dots,5\}, b \in \{1,\dots,5\}\} \text{ mit }i \in \{1,\dots,5\}$ \\
+    Wir können maximal 5 Stapel bilden, da wir 5 Kisten haben. Jede Kiste wird beschrieben durch ein Tupel von $x$ und $y$ welche den Stapel sowie die Höhe in diesem Stapel beschreiben.$w_1$ beschreibt den Wert der Kiste, man könnte auch die Reihenfolge dafür benutzen, aber dadurch werden die Formalitäten kniffliger.
+    \textbf{Anfangszustand:}
+    $((1,1,2),(2,1,1),(3,1,4),(4,1,3),(5,1,5))$ \\
+    \textbf{Zielzustand:}
+    $((1,x_1,5),(2,x_2,4),(3,x_3,3),(4,x_4,2),(5,x_5,1))$ mit $x_1 = x_2 \land x_2 = x_3 \land x_3 = x_4 \land x_4 = x_5$\\
+    \textbf{Aktionen:}
+    \begin{enumerate}[~~1.]
+    \item \begin{align*}\textsf{bewegen}(von, nach, ((w_1,x_1, y_1), (w_2,x_2, y_2), (w_3,x_3, y_3), (w_4,x_4, y_4), (w_5,x_5, y_5)) \rightarrow  \\ ((c_1, a_1, b_1), (c_2, a_2, b_2), (c_3, a_3, b_3), (c_4, a_4, b_4), (c_5, a_5, b_5))\end{align*} 
+    die Bedingungen in Python/Javascript-Pseudocode:
+\begin{lstlisting}
+# w bezeichnet auch den Index in der liste
+current = [[w_1,x_1, y_1], [w_2,x_2, y_2], [w_3,x_3, y_3],
+           [w_4,x_4, y_4], [w_5,x_5, y_5]]
+oberste_kiste_von = current.filter(lambda x: x[1] == von)
+                           .max(key=lambda x, y: x[2] > y[2])
+oberste_kiste_nach = current.filter(lambad x: x[1] == nach)
+                            .max(key=lambda x, y: x[2] > y[2])
+position = oberste_kiste_von[0 - 1] # TODO
+return current[0:positon] +
+       [[oberste_kiste_von[0], nach, oberste_kiste_nach[2] + 1]] +
+       current[position:]
+
+\end{lstlisting}
+    \end{enumerate}
+    \item Eine Heuristik ist:
+    
 \end{enumerate}
 
 \section*{Aufgabe 3}
 \begin{enumerate}[~~a)]
-	\item
-	Die iterative Tiefensuche vereint die Vorteile von Tiefen- und Breitensuche. Es handelt sich ebenfalls um eine uninformierte Suche, die für Probleme mit uniformen Aktionskosten die Optimalität der Breitensuche und den geringen Speicherverbrauch der Tiefensuche vereint. Im Gegensatz zu normalen Tiefensuche ist sie auch Vollständig für Suchbäume mit unendlich langen Pfaden. \\
+    \item
+    Die iterative Tiefensuche vereint die Vorteile von Tiefen- und Breitensuche. Es handelt sich ebenfalls um eine uninformierte Suche, die für Probleme mit uniformen Aktionskosten die Optimalität der Breitensuche und den geringen Speicherverbrauch der Tiefensuche vereint. Im Gegensatz zu normalen Tiefensuche ist sie auch Vollständig für Suchbäume mit unendlich langen Pfaden. \\
 Dies wird dadurch erreicht, dass in jedem Iterationsschrit eine Tiefensuche bis zu einer begrenzten Tiefe ausgeführt wird. Nach jedem Iterationsschritt wird diese Tiefe um 1 erhöht. Damit werden beispielsweise, wenn man bei der Tiefe 0 anfängt, erst alle Knoten, die über Pfade der Länge 0 erreichtw erden können untersucht. Dann alle Knoten, die über Pfade der Länge 1 erreicht werden können und so weiter. \\
 Dadurch, dass jedes Mal eine Tiefensuche stattfindet, ist der Speicherbedarf gering, da immer nur der aktuell betrachtete Ast im Speicher gehalten werden muss. Durch die Begrenzung der Tiefe wird, sofern eine Lösung vorhanden ist, wie bei der Breitensuche bei uniformen Aktionskosten auch eine Lösung auf der niedrigsten Tiefe gefunden, auf der Lösungen gefunden werden können. Wenn mehrere Lösungen auf dieser Ebene existieren, ist es egal, welche von diesen wir finden, da alle die gleichen Kosten haben. \\
 
-	\item
-	Beim vollständigen Durchsuchen des Baumes müssen der Wurzelknoten 6 Mal (also die Tiefe+1), alle Knoten der Tiefe 1 5 Mal, alle Knoten der Tiefe 2 4 Mal usw. generiert werden. Es ergibt sich also folgende Rechnung:
-	$$ 6*1 + 5*35 + 4*35^2 + 3*35^3 + 2*35^4 + 35^5 = 55 656 831 $$\\
-	
-	Bei der normalen Tiefensuche wird jeder Knoten genau ein mal generiert, wir haben also:
-	
-	$$ 1 + 35 + 35^2 + 35^3 + 35^4 + 35^5 = 54 066 636$$
-	
-	Insgesamt haben wir in diesem Fall bei der iterativen Tiefensuche also nur einen Overhead von ungefähr 3 Prozent:
-	
-	$$55656831/54066636 = 1.029411761$$
+    \item
+    Beim vollständigen Durchsuchen des Baumes müssen der Wurzelknoten 6 Mal (also die Tiefe+1), alle Knoten der Tiefe 1 5 Mal, alle Knoten der Tiefe 2 4 Mal usw. generiert werden. Es ergibt sich also folgende Rechnung:
+    $$ 6*1 + 5*35 + 4*35^2 + 3*35^3 + 2*35^4 + 35^5 = 55 656 831 $$\\
+    
+    Bei der normalen Tiefensuche wird jeder Knoten genau ein mal generiert, wir haben also:
+    
+    $$ 1 + 35 + 35^2 + 35^3 + 35^4 + 35^5 = 54 066 636$$
+    
+    Insgesamt haben wir in diesem Fall bei der iterativen Tiefensuche also nur einen Overhead von ungefähr 3 Prozent:
+    
+    $$55656831/54066636 = 1.029411761$$
 
-	\item
-	Je höher der Verzweigungsfaktor ist (solange er nicht unendlich ist), desto geringer ist der prozentuale Overhead der iterativen Tiefensuche, denn die Anzahl der Blätter wächst mit einer Vergrößerung des Verzweigungsfaktors sehr stark. Die Blätter machen den größten Teil des Suchbaumes aus und werden sowohl bei der Tiefensuche als auch bei der iterativen Tiefensuche nur einmal generiert. Die mehrfache Generierung der Knoten geringerer Tiefen fällt bei einem hohen Verzweigungsfaktor also nicht so sehr ins Gewicht, wie bei einem niedrigen Verzweigungsfaktor, da der Unterschied der Anzahl an Knoten zweier Tiefen bei großem Verzweigungsfaktor wesentlich höher ist.\\
-	So sind bei einem Verzweigungsfaktor von 2 beispielsweise immer doppelt so viele Knoten in der nächst tieferen Ebene, wie in der Ebene darüber. Beim Verzweigungsfaktor 5 sind es hingegen schon fünf Mal so viele Knoten.
+    \item
+    Je höher der Verzweigungsfaktor ist (solange er nicht unendlich ist), desto geringer ist der prozentuale Overhead der iterativen Tiefensuche, denn die Anzahl der Blätter wächst mit einer Vergrößerung des Verzweigungsfaktors sehr stark. Die Blätter machen den größten Teil des Suchbaumes aus und werden sowohl bei der Tiefensuche als auch bei der iterativen Tiefensuche nur einmal generiert. Die mehrfache Generierung der Knoten geringerer Tiefen fällt bei einem hohen Verzweigungsfaktor also nicht so sehr ins Gewicht, wie bei einem niedrigen Verzweigungsfaktor, da der Unterschied der Anzahl an Knoten zweier Tiefen bei großem Verzweigungsfaktor wesentlich höher ist.\\
+    So sind bei einem Verzweigungsfaktor von 2 beispielsweise immer doppelt so viele Knoten in der nächst tieferen Ebene, wie in der Ebene darüber. Beim Verzweigungsfaktor 5 sind es hingegen schon fünf Mal so viele Knoten.
 \end{enumerate}
 
 \section*{Aufgabe 4}
