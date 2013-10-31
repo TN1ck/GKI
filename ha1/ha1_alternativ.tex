@@ -103,92 +103,92 @@ Niklas Gebauer \> - 340942 \\
 		\begin{center}
 			\begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
 				% Zustaende
-				\node[state, rectangle]	(1)	{(A,0,100)};
-				\node[state, rectangle] (2)[below right of=1] {(i, 100, 50)};
-				\node[state, rectangle] (3)[below left of=1] {(Z, 170, 5)};
+				\node[state, rectangle]	(1)	{(A,100)};
+				\node[state, rectangle] (2)[below right of=1] {(i, 50)};
+				\node[state, rectangle] (3)[below left of=1] {(Z, 5)};
 
-				\path[->, bend left] (1) edge node {} (2);
-				\path[->, bend right] (1) edge node {} (3);
+				\path[->, bend left] (1) edge node {100} (2);
+				\path[->, bend right] (1) edge node {170} (3);
 			\end{tikzpicture}
 		\end{center}
 		\item ~\\
 		\begin{center}
 			\begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
 				% Zustaende
-				\node[state, rectangle]	(1)	{(A,0,100)};
+				\node[state, rectangle]	(1)	{(A,100)};
 
-				\node[state, rectangle] (2)[below right of=1] {(i, 100, 50)};
-				\node[state, rectangle] (3)[below left of=1] {(Z, 170, 5)};
+				\node[state, rectangle] (2)[below right of=1] {(i, 50)};
+				\node[state, rectangle] (3)[below left of=1] {(Z, 5)};
 
-				\node[state, rectangle] (4)[below of=2] {(i, 300, 100)};
-				\node[state, rectangle] (5)[left of=4] {(B, 180, 5)};
-				\node[state, rectangle] (6)[right of=4] {(j, 200, 0)};
+				\node[state, rectangle] (4)[below of=2] {(i, 100)};
+				\node[state, rectangle] (5)[left of=4] {(B, 5)};
+				\node[state, rectangle] (6)[right of=4] {(j, 0)};
 
-				\path[->, bend left] (1) edge node {} (2);
-				\path[->, bend right] (1) edge node {} (3);
+				\path[->, bend left] (1) edge node {100} (2);
+				\path[->, bend right] (1) edge node {170} (3);
 
-				\path[->] (2) edge node {} (4);
-				\path[->, bend right] (2) edge node {} (5);
-				\path[->, bend left] (2) edge node {} (6);
+				\path[->] (2) edge node {200} (4);
+				\path[->, bend right] (2) edge node {80} (5);
+				\path[->, bend left] (2) edge node {100} (6);
 			\end{tikzpicture}
 		\end{center}
-		\item Die dritte und vierte Expansion von dem Knoten (Z,170,5) und (B,180,5) bewirken keine Veränderung des Baumes, da Sie keine Nachfolger haben. (Energie reicht nicht aus um zu einem anderen Knoten zu fahren)
+		\item Die dritte und vierte Expansion von dem Knoten (Z,5) und (B,5) bewirken keine Veränderung des Baumes, da Sie keine Nachfolger haben. (Energie reicht nicht aus um zu einem anderen Knoten zu fahren)
 		\item ~\\
 		\begin{center}
 			\begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
 				% Zustaende
-				\node[state, rectangle]	(1)	{(A,0,100)};
+				\node[state, rectangle]	(1)	{(A,100)};
 
-				\node[state, rectangle] (2)[below right of=1] {(i, 100, 50)};
-				\node[state, rectangle] (3)[below left of=1] {(Z, 170, 5)};
+				\node[state, rectangle] (2)[below right of=1] {(i, 50)};
+				\node[state, rectangle] (3)[below left of=1] {(Z, 5)};
 
-				\node[state, rectangle] (4)[below of=2] {(i, 300, 100)};
-				\node[state, rectangle] (5)[left of=4] {(B, 180, 5)};
-				\node[state, rectangle] (6)[right of=4] {(j, 200, 0)};
+				\node[state, rectangle] (4)[below of=2] {(i, 100)};
+				\node[state, rectangle] (5)[left of=4] {(B, 5)};
+				\node[state, rectangle] (6)[right of=4] {(j, 0)};
 
-				\node[state, rectangle] (7)[below right of=6] {(j, 400, 100)};
+				\node[state, rectangle] (7)[below right of=6] {(j, 100)};
 
-				\path[->, bend left] (1) edge node {} (2);
-				\path[->, bend right] (1) edge node {} (3);
+				\path[->, bend left] (1) edge node {100} (2);
+				\path[->, bend right] (1) edge node {170} (3);
 
-				\path[->] (2) edge node {} (4);
-				\path[->, bend right] (2) edge node {} (5);
-				\path[->, bend left] (2) edge node {} (6);
+				\path[->] (2) edge node {200} (4);
+				\path[->, bend right] (2) edge node {80} (5);
+				\path[->, bend left] (2) edge node {100} (6);
 
-				\path[->, bend left] (6) edge node {} (7);
+				\path[->, bend left] (6) edge node {200} (7);
 			\end{tikzpicture}
 		\end{center}
 		\item ~\\
 			\begin{center}
 				\begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
 					% Zustaende
-					\node[state, rectangle]	(1)	{(A,0,100)};
+					\node[state, rectangle]	(1)	{(A,100)};
 
-					\node[state, rectangle] (2)[below right of=1] {(i, 100, 50)};
-					\node[state, rectangle] (3)[below left of=1] {(Z, 170, 5)};
+					\node[state, rectangle] (2)[below right of=1] {(i, 50)};
+					\node[state, rectangle] (3)[below left of=1] {(Z, 5)};
 
-					\node[state, rectangle] (4)[below of=2] {(i, 300, 100)};
-					\node[state, rectangle] (5)[left of=4] {(B, 180, 5)};
-					\node[state, rectangle] (6)[right of=4] {(j, 200, 0)};
+					\node[state, rectangle] (4)[below of=2] {(i, 100)};
+					\node[state, rectangle] (5)[left of=4] {(B, 5)};
+					\node[state, rectangle] (6)[right of=4] {(j, 0)};
 
 
-					\node[state, rectangle] (8)[below of=4] {(B, 380, 55)};
-					\node[state, rectangle] (9)[right of=8] {(j, 400, 50)};
-					\node[state, rectangle] (10)[left of=8] {(Z, 500, 0)};
+					\node[state, rectangle] (8)[below of=4] {(B, 55)};
+					\node[state, rectangle] (9)[right of=8] {(j, 50)};
+					\node[state, rectangle] (10)[left of=8] {(Z, 0)};
 
-					\node[state, rectangle] (7)[right of=9] {(j, 400, 100)};
-					\path[->, bend left] (1) edge node {} (2);
-					\path[->, bend right] (1) edge node {} (3);
+					\node[state, rectangle] (7)[right of=9] {(j, 100)};
+					\path[->, bend left] (1) edge node {100} (2);
+					\path[->, bend right] (1) edge node {170} (3);
 
-					\path[->] (2) edge node {} (4);
-					\path[->, bend right] (2) edge node {} (5);
-					\path[->, bend left] (2) edge node {} (6);
+					\path[->] (2) edge node {200} (4);
+					\path[->, bend right] (2) edge node {80} (5);
+					\path[->, bend left] (2) edge node {100} (6);
 
-					\path[->, bend left] (6) edge node {} (7);
+					\path[->, bend left] (6) edge node {200} (7);
 
-					\path[->] (4) edge node {} (8);
-					\path[->, bend right] (4) edge node {} (9);
-					\path[->, bend left] (4) edge node {} (10);
+					\path[->] (4) edge node {80} (8);
+					\path[->, bend left] (4) edge node {100} (9);
+					\path[->, bend right] (4) edge node {200} (10);
 				\end{tikzpicture}
 			\end{center}
 	\end{enumerate}
