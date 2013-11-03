@@ -283,6 +283,9 @@ Johannes Herrmann \> - xxxxxx\\
     $bewegen2(a, b, S)Z \rightarrow   Z'$mit\\
     $(a, b, R),S \in Z \land Z' = (Z \ \{(a, b, R), S\}) \cup \{(a, b, S), R\}$ \\ \\
     \item Eine zulässige Heuristik ist: \\
+        $$\textsf{max}(\textsf{Anzahl groeßerer Kisten die auf kleineren stehen (nur paarweise)}, \textsf{  Anzahl Türme} - 1)$$
+
+          Diese Heurisistik ist zulässig da die Anzahl noch benötigter Züge \textbf{immer} größer gleich als die aktuelle Anzahl Türme - 1 ist. Ebenso kann die Anzahl größerer Kisten auf kleineren Kisten nie größer als die Restanzahl Züge sein, da mein Wunschzustand genau das umgekeherte ist und ich mindestens 2 Züge brauche die kleinere auf die größere zu stellen.
 \end{enumerate}
 
 \section*{Aufgabe 3}
