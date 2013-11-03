@@ -84,9 +84,8 @@ Niklas Gebauer \> - 340942 \\
     \end{align*}
 
     % Charakteristika des Suchbaum-
-    \item \textbf{Verzweigungsgrad:} maximal 3 \\
-    \textbf{Tiefe:} 6 wenn man sich beim Suchen intelligent anstellt. Wobei das beudeutet, dass wir einen Knoten nur 2x besuchen wenn im zweiten Besuch des Knotens die Ladung größer ist als beim ersten Besuch.
-
+    \item \textbf{Verzweigungsgrad:} maximal 5 (in Zustand i am größten) \\
+    \textbf{Tiefe:} Eine obere Abschätzung ist die Anzahl der Positionen*Anzahl der Ladezustände. Die Ladezustände können wir in Fünferschritten zählen, da die Energiekosten alle durch 5 teilbar sind. Wir hätten dann also eine maximale Tiefe von 6*(100/5)=6*20=120.
     % Suchverfahren
     \item
     Da wir den schnellsten Weg finden wollen und nicht uniforme Aktionskosten haben, wäre 'Branch \& Bound' am besten als Suchalgorithmus geeignet.
@@ -229,8 +228,7 @@ return current[0:positon] +
 
 \end{lstlisting}
     \end{enumerate}
-    \item Eine Heuristik ist:
-    
+    \item Eine zulässige Heuristik ist: \\
 \end{enumerate}
 
 \section*{Aufgabe 3}
@@ -258,6 +256,74 @@ Dadurch, dass jedes Mal eine Tiefensuche stattfindet, ist der Speicherbedarf ger
 \end{enumerate}
 
 \section*{Aufgabe 4}
+\begin{enumerate}[~~a)]
+    \item
+\begin{tabular}{|c|c|c|c|}
+\hline
+Schritt & Expandiert & Queue & Anmerkung  \\ \hline
+1. & A(35) & AC(30), AB(40) & - \\ \hline
+2. & AC(30) & ACZ(35), ACD(40), AB(40) & ACA (Zyklus), ACB (Dyn. Progr.) \\ \hline
+\end{tabular}
+\\ \\
+A* terminiert nun mit dem Ergebnis, dass ACZ der kürzeste Pfad von A nach Z ist, da ACZ in der Queue ganz vorne steht.
+
+\item
+	Die Heuristik überschätzt die Kosten von B nach Z, denn die echten Kosten sind 25, die Heuristik prognostiziert aber 35. Dadurch handelt es sich um eine unzulässige Heuristik und die Optimalität von A* ist nicht mehr gewährleistet, was sich auch in unserer Simulation zeigt. Statt AB zu expandieren und den kürzesten Weg zu finden, terminiert A* wegen der Überschätzung frühzeitig.
+
+\item
+	Wir wählen für B 20 statt 35 als heuristische Kostenschätzung, damit A* eine optimale Lösung liefert: \\ \\
+\begin{tabular}{|c|c|c|c|}
+\hline
+Schritt & Expandiert & Queue & Anmerkung  \\ \hline
+1. & A(35) & AB(25), AC(30) & - \\ \hline
+2. & AB(25) & ABC(25), ABD(30), AB(40) & ABA (Zyklus), AC (Dyn. Progr.) \\ \hline
+3. & ABC(25) & ABCZ(30), ABD(30) & ABCA(Zykl.), ABCB (Zykl.), ABCD (Dyn. Progr.) \\ \hline
+\end{tabular}
+\\ \\
+A* terminiert nun mit dem optimalen Ergebnis ABCZ als kürzesten Pfad zwischen A und Z.
+
+\item
+Betrachten wir folgenden Suchgraphen, in dem der kürzeste Weg von w nach z gefunden werden soll. Der Wert der Heuristik ist für jeden Knoten in Klammern hinter dem Bezeichner notiert.\\
+
+\begin{center}
+            \begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
+                % Zustaende
+                \node[state, circle] (1) {w (10)};
+                \node[state, circle] (2)[below right of=1] {x (-1)};
+                \node[state, circle] (3)[below left of=1] {y (5)};
+	     \node[state, circle] (4)[below left of=2] {z (0)};
+
+                \path[->, bend left] (1) edge node {10} (2);
+                \path[->, bend right] (1) edge node[left] {5} (3);
+	     \path[->, ] (2) edge node {1} (3);
+                \path[->, bend right] (3) edge node[left] {3} (4);
+            \end{tikzpicture}
+        \end{center}
+
+Der Wert der Heuristik für den Knoten 'x' ist negativ. Dadurch würde A* nach dem Expandieren des Startknotens 'w' vorerst 'x' expandieren, da der Wert der Funktion, die die Kosten berechnet, nach denen die Zustände in die Queue eingeornet werden, für 'x' geringer ist, als für 'y' (10+(-1) = 9 für 'x' und 5+5 = 10 für 'y'). \\
+Dadurch wird das zielgerichtete Verhalten von A* kurzzeitig negativ beeinflusst. Denn der kürzeste Weg führt offensichtlich direkt über 'y' und selbst eine uninformierte Suche, die nur die bisherigen Pfadkosten kennt (zB. Breitensuche), würde in diesem Fall vorerst 'y' expandieren. Mit negativem Wert kann die Heuristik also sogar mehr Suchaufwand als nötig verursachen, indem sie A* sozusagen 'in die Irre führt'.\\
+
+\item
+Eine negative Heuristik kann sowohl Vollständigkeit als auch Optimalität von A* verhindern. Für die Optimalität besteht ein Problem besonders dann, wenn der Zielknoten und den Knoten auf einem suboptimalen Pfad negative Werte zugeteilt werden. Betrachten wir für die Optimalität folgendes Beispiel: \\
+       \begin{center}
+            \begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
+                % Zustaende
+                \node[state, circle] (1) {w (10)};
+                \node[state, circle] (2)[below right of=1] {x (-5)};
+                \node[state, circle] (3)[below left of=1] {y (5)};
+	     \node[state, circle] (4)[below left of=2] {z (-10)};
+
+                \path[->, bend left] (1) edge node {10} (2);
+                \path[->, bend right] (1) edge node[left] {6} (3);
+	     \path[->, bend left] (2) edge node {5} (4);
+                \path[->, bend right] (3) edge node[left] {3} (4);
+            \end{tikzpicture}
+        \end{center}
+
+A* würde mit dem Pfad 'wxz' terminieren, obwohl 'wyz' kürzer ist. Aber sowohl f(wx) = 5 als auch f(wxz) = 5 sind kleiner als f(wy) = 11 (für f(x) = g(x) + h(x) mit g(x) sind die tatsächlichen Pfadkosten und h(x) ist der heuristische Wert). Also findet A* nicht den optimalen Pfad. Wenn dem Zielzustand kein negativer Wert zugewiesen wird, bleibt die Optimalität jedoch erhalten.
+
+Dei Vollständigkeit bleibt bei endlichen Zustandsräumen bestehen, denn dann werden im worst case auch bei negativer Heuristik alle Pfade expandiert, eine vorhandene Lösung also gefunden. Für unendliche Zustandsräume kann allerdings keine Vollständigkeit garantiert werden, denn negative Werte einer Heuristik können anfallende Pfadkosten von unendlichen Pfaden immer kleiner halten als den Weg zur Lösung, wenn die heuristichen Werte mit dem unendlichen Pfad immer weiter ins negative wachsen.
+\end{enumerate}
 
 
 \end{document}
