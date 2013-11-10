@@ -21,6 +21,6 @@
     (loop [state state-initial domains domains-initial]
       (if (= n (count state))
         state
-        (recur (progress-state (cons 0 state) domain-initial) domains)))))
+        (recur (progress-state (cons 0 state) domains-initial) domains)))))
 
-(solve 8)
+(solve 16)
