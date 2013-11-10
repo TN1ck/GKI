@@ -42,4 +42,35 @@
                              :when (every? true? (map #(% (cons i x)) constrains))]
                          (cons i x)) xs))))))
 
-(solve-stack 10)
+(solve-stack 8)
+
+(def not-nil? (complement nil?))
+
+(count {1 2})
+
+(dissoc {1 [1 2] 2 [3]} 2)
+(assoc {} 1 2)
+
+
+(defn solve-stack-fc-mv [n]
+  "exacly the algorithm mentioned in the exercise with forward checking and mrv"
+  (let [domains-initial (zipmap (range n) (repeat (range n)))
+        stack [[{} domains-initial]]
+        constrains [(fn [[x1 y1] [x2 y2]] (not= y1 y2))
+                    (fn [[x1 y1] [x2 y2]]
+                      (not= (Math/abs (- x1 x2))
+                            (Math/abs (- y1 y2))))]
+        forward-check (fn [x1 y1 domains]
+                        (apply merge
+                               (for [[x2 domain] domains]
+                                 {x2 (filter (fn [y2] (every? true? (map #(% [x1 y1] [x2 y2]) constrains))) domain)})))]
+    (loop [[[state domains] & xs] stack]
+      (if (or (nil? state) (= n (count state)))
+          (map second (sort state))
+          (let [[x domain] (first domains)
+                domains (dissoc domains x)
+                states (for [y domain]
+                         [(assoc state x y) (forward-check x y domains)])]
+            (recur (concat states xs)))))))
+
+(solve-stack-fc-mv 8)
