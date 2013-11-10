@@ -25,6 +25,7 @@
 
 (solve-with-stepper 4)
 
+
 (defn solve-stack [n]
   "exacly the algorithm mentioned in the exercise"
   (let [domains (vec (for [i (range n)] (vec (range n))))
@@ -44,7 +45,6 @@
 
 (solve-stack 8)
 
-(sort (group-by (comp count second) {1 [1 2] 3 [1 2] 7 [1]}))
 
 (defn solve-stack-fc-mrv [n]
   "exacly the algorithm mentioned in the exercise with forward checking and mrv"
