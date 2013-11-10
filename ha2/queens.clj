@@ -44,15 +44,9 @@
 
 (solve-stack 8)
 
-(def not-nil? (complement nil?))
+(sort (group-by (comp count second) {1 [1 2] 3 [1 2] 7 [1]}))
 
-(count {1 2})
-
-(dissoc {1 [1 2] 2 [3]} 2)
-(assoc {} 1 2)
-
-
-(defn solve-stack-fc-mv [n]
+(defn solve-stack-fc-mrv [n]
   "exacly the algorithm mentioned in the exercise with forward checking and mrv"
   (let [domains-initial (zipmap (range n) (repeat (range n)))
         stack [[{} domains-initial]]
@@ -67,10 +61,10 @@
     (loop [[[state domains] & xs] stack]
       (if (or (nil? state) (= n (count state)))
           (map second (sort state))
-          (let [[x domain] (first domains)
+          (let [[x domain] (rand-nth ((comp second first) (sort (group-by (comp count second) domains))))
                 domains (dissoc domains x)
                 states (for [y domain]
                          [(assoc state x y) (forward-check x y domains)])]
             (recur (concat states xs)))))))
 
-(solve-stack-fc-mv 8)
+(solve-stack-fc-mrv 12)
