@@ -112,8 +112,10 @@
         (let [[x domain] (rand-nth ((comp second first)
                                     (sort (group-by (comp count second)
                                                     (filter (fn [[x d]] (not (state x))) domains)))))
-              states (for [y domain]
-                       [(assoc state x y) (arc-consistency (assoc domains x [y]))])
+              states (for [y domain
+                           :let [domains-new (arc-consistency (assoc domains x [y]))]
+                           :when (empty? (filter (fn [[x d]] (zero? (count d))) domains-new))]
+                       [(assoc state x y) domains-new])
               states states]
           (recur (concat states xs)))))))
 
