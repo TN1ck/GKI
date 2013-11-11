@@ -23,7 +23,7 @@
         state
         (recur (progress-state (cons 0 state) domains-initial) domains)))))
 
-(solve-with-stepper 4)
+(solve-with-stepper 5)
 
 
 (defn solve-stack [n]
@@ -67,4 +67,54 @@
                          [(assoc state x y) (forward-check x y domains)])]
             (recur (concat states xs)))))))
 
-(solve-stack-fc-mrv 12)
+(solve-stack-fc-mrv 5)
+
+(defn solve-stack-arc-mrv [n]
+  "exacly the algorithm mentioned in the exercise with arc-consistency and mrv"
+  (let [domains-initial (zipmap (range n) (repeat (range n)))
+        stack [[{} domains-initial]]
+        constrains [(fn [[x1 y1] [x2 y2]] (not= y1 y2))
+                    (fn [[x1 y1] [x2 y2]]
+                      (not= (Math/abs (- x1 x2))
+                            (Math/abs (- y1 y2))))]
+        arc-consistency (fn [domains]
+                          (let [arcs
+                                (for [[x1 d1] domains
+                                      [x2 d2] domains
+                                      :when (not= x1 x2)]
+                                  [x1 x2])]
+                            (loop [[[x1 x2] & xs] arcs domains domains]
+                              (if (or (nil? x1))
+                                domains
+                                (let [d1 (domains x1)
+                                      d2 (domains x2)
+                                      d1-new (loop [[y1 & ys] d1 d1new []]
+                                               (if (nil? y1)
+                                                 d1new
+                                                 (let [xy (for [y2 d2]
+                                                            [[x1 y1] [x2 y2]])
+                                                       xy1 (map (comp second first)
+                                                                (filter (fn [[[x1 y1] [x2 y2]]]
+                                                                          (every? true? (map #(% [x1 y1] [x2 y2]) constrains)))
+                                                                        xy))
+                                                       xy1 xy1]
+                                                   (if (empty? xy1)
+                                                     (recur ys d1new)
+                                                     (recur ys (cons y1 d1new))))))
+                                      new-arcs (for [[x3 y3] domains
+                                                     :when (and (not= x3 x2) (not= x3 x1))] [x3 x1])
+                                      new-arcs new-arcs
+                                      xs xs]
+                                  (if (not= (sort d1-new) (sort d1))
+            (recur (concat xs new-arcs) (assoc domains x1 d1-new))
+            (recur xs domains)))))))]
+    (loop [[[state domains] & xs] stack]
+      (if (or (nil? state) (= n (count state)))
+        (map second (sort state))
+        (let [[x domain] (rand-nth ((comp second first) (sort (group-by (comp count second) (filter (fn [[x d]] (not (state x))) domains)))))
+              states (for [y domain]
+                       [(assoc state x y) (arc-consistency (assoc domains x [y]))])
+              states states]
+          (recur (concat states xs)))))))
+
+(solve-stack-arc-mrv 8)
