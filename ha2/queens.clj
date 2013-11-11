@@ -84,7 +84,7 @@
                                       :when (not= x1 x2)]
                                   [x1 x2])]
                             (loop [[[x1 x2] & xs] arcs domains domains]
-                              (if (or (nil? x1))
+                              (if (nil? x1)
                                 domains
                                 (let [d1 (domains x1)
                                       d2 (domains x2)
@@ -102,16 +102,16 @@
                                                      (recur ys d1new)
                                                      (recur ys (cons y1 d1new))))))
                                       new-arcs (for [[x3 y3] domains
-                                                     :when (and (not= x3 x2) (not= x3 x1))] [x3 x1])
-                                      new-arcs new-arcs
-                                      xs xs]
+                                                     :when (and (not= x3 x2) (not= x3 x1))] [x3 x1])]
                                   (if (not= (sort d1-new) (sort d1))
-            (recur (concat xs new-arcs) (assoc domains x1 d1-new))
-            (recur xs domains)))))))]
+                                    (recur (concat xs new-arcs) (assoc domains x1 d1-new))
+                                    (recur xs domains)))))))]
     (loop [[[state domains] & xs] stack]
       (if (or (nil? state) (= n (count state)))
         (map second (sort state))
-        (let [[x domain] (rand-nth ((comp second first) (sort (group-by (comp count second) (filter (fn [[x d]] (not (state x))) domains)))))
+        (let [[x domain] (rand-nth ((comp second first)
+                                    (sort (group-by (comp count second)
+                                                    (filter (fn [[x d]] (not (state x))) domains)))))
               states (for [y domain]
                        [(assoc state x y) (arc-consistency (assoc domains x [y]))])
               states states]
