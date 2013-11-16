@@ -182,27 +182,21 @@ Alle Aufgaben wurden in \textbf{Clojure1 1.5} geschrieben und benutzen nichts au
                       (not= (Math/abs (- x1 x2))
                             (Math/abs (- y1 y2))))]
         arc-consistency (fn [domains]
-                          (let [arcs (for [[x1 d1] domains
-                                           [x2 d2] domains
-                                           :when (not= x1 x2)]
-                                       [x1 x2])]
+                          (let [arcs
+                                (for [[x1 d1] domains
+                                      [x2 d2] domains
+                                      :when (not= x1 x2)]
+                                  [x1 x2])]
                             (loop [[[x1 x2] & xs] arcs domains domains]
-                              (if (nil? x1) domains
+                              (if (nil? x1)
+                                domains
                                 (let [d1 (domains x1)
                                       d2 (domains x2)
-                                      d1-new (loop [[y1 & ys] d1 d1new []]
-                                               (if (nil? y1)
-                                                 d1new
-                                                 (let [xy (for [y2 d2]
-                                                            [[x1 y1] [x2 y2]])
-                                                       xy1 (map (comp second first)
-                                                                (filter (fn [[[x1 y1] [x2 y2]]]
-                                                                          (every? true? (map #(% [x1 y1] 
-                                                                                                 [x2 y2])
-                                                                                         constrains))) xy))]
-                                                   (if (empty? xy1)
-                                                     (recur ys d1new)
-                                                     (recur ys (cons y1 d1new))))))
+                                      d1-new (for [y1 d1
+                                                   :when (not (empty? (filter (fn [y2]
+                                                                   (every? true? (map #(% [x1 y1]
+                                                                                          [x2 y2])
+                                                                                      constrains))) d2)))] y1)
                                       new-arcs (for [[x3 y3] domains
                                                      :when (and (not= x3 x2) (not= x3 x1))] [x3 x1])]
                                   (if (not= (sort d1-new) (sort d1))
@@ -217,15 +211,16 @@ Alle Aufgaben wurden in \textbf{Clojure1 1.5} geschrieben und benutzen nichts au
               states (for [y domain
                            :let [domains-new (arc-consistency (assoc domains x [y]))]
                            :when (empty? (filter (fn [[x d]] (zero? (count d))) domains-new))]
-                       [(assoc state x y) domains-new])]
+                       [(assoc state x y) domains-new])
+              states states]
           (recur (do (swap! counter (partial + (count states)))
                      (concat states xs))))))))
 \end{lstlisting}
 \textbf{Erklärung}
 \begin{itemize}
   \item \textbf{domains-initial und constrains} Genau wie in forward-check.
-    \item \textbf{arc-conistency} Bekommt als Eingabe alle Domains, wobei die Domains von gesetzten Damen einstellig sind. Benutzt viel Rekursion und sieht unheimlich komplex wegen der Berechnung von \texttt{d1-new} aus, könnte vermutlich deutlich vereinfacht werden, dafür fehlt mir aber gerade die Zeit.
-    \item \textbf{loop} Ziemlich genau wie beim forward-check, nur entfernen wir nicht die belegten Variablen aus \texttt{domains} da wir die Belegung für den arc-consistency check brauchen. Dadurch hat sich aber etwas die Berechnung für die nächste Varibale geändert (nur Variablen aus \texttt{domains} deren key noch nicht in \texttt{state} ist): \texttt{(filter (fn [[x d]] (not (state x))) domains)}. Für den aktuellen Zustand werden dann wieder die Folgezustände asugerechnet, wobei keiner eine leere domain haben darf: \texttt{:when (empty? (filter (fn [[x d]] (zero? (count d))) domains-new))}. 
+    \item \textbf{arc-conistency} Bekommt als Eingabe alle Domains, wobei die Domains von gesetzten Damen einstellig sind.
+    \item \textbf{loop} Ziemlich genau wie beim forward-check, nur entfernen wir nicht die belegten Variablen aus \texttt{domains} da wir die Belegung für den arc-consistency check brauchen. Dadurch hat sich aber etwas die Berechnung für die nächste Varibale geändert (nur Variablen aus \texttt{domains} deren key noch nicht in \texttt{state} ist): \texttt{(filter (fn [[x d]] (not (state x))) domains)}. Für den aktuellen Zustand werden dann wieder die Folgezustände asugerechnet, wobei keiner eine leere domain haben darf: \texttt{:when (empty? (filter (fn [[x d]] (zero? (count d))) domains-new))}.
 \end{itemize}
 \newpage
 \subsection*{Diagramme}
