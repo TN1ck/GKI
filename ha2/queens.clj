@@ -8,7 +8,7 @@
   (let [domains (vec (for [i (range n)] (vec (range n))))
         constrains [(fn [state] (= (count (distinct state)) (count state)))
                     (fn [state] (let [j (dec (count state))]
-                                  (every? true? (for [i (range 0 j)]
+                                  (every? true? (for [i (range j)]
                                                   (not= (Math/abs (- i j))
                                                         (Math/abs (- ((domains i) (nth state (- j i)))
                                                                      ((domains j) (first state)))))))))]]
@@ -69,8 +69,7 @@
                                                        xy1 (map (comp second first)
                                                                 (filter (fn [[[x1 y1] [x2 y2]]]
                                                                           (every? true? (map #(% [x1 y1] [x2 y2]) constrains)))
-                                                                        xy))
-                                                       xy1 xy1]
+                                                                        xy))]
                                                    (if (empty? xy1)
                                                      (recur ys d1new)
                                                      (recur ys (cons y1 d1new))))))
