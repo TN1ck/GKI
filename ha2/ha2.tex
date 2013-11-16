@@ -227,6 +227,14 @@ Alle Aufgaben wurden in \textbf{Clojure1 1.5} geschrieben und benutzen nichts au
     \item \textbf{arc-conistency} Bekommt als Eingabe alle Domains, wobei die Domains von gesetzten Damen einstellig sind. Benutzt viel Rekursion und sieht unheimlich komplex wegen der Berechnung von \texttt{d1-new} aus, könnte vermutlich deutlich vereinfacht werden, dafür fehlt mir aber gerade die Zeit.
     \item \textbf{loop} Ziemlich genau wie beim forward-check, nur entfernen wir nicht die belegten Variablen aus \texttt{domains} da wir die Belegung für den arc-consistency check brauchen. Dadurch hat sich aber etwas die Berechnung für die nächste Varibale geändert (nur Variablen aus \texttt{domains} deren key noch nicht in \texttt{state} ist): \texttt{(filter (fn [[x d]] (not (state x))) domains)}. Für den aktuellen Zustand werden dann wieder die Folgezustände asugerechnet, wobei keiner eine leere domain haben darf: \texttt{:when (empty? (filter (fn [[x d]] (zero? (count d))) domains-new))}. 
 \end{itemize}
+\newpage
+\subsection*{Diagramme}
+Alle Grafiken wurden mit nvd3.js + d3.js erstellt und die interaktiven Versionen davon sind in charts.html zu finden. Die Rohdaten sind in \texttt{results.json}. \texttt{queens\$solve\_stack\_fc\_mrv@1c0b5c67} steht für \textbf{BT + FC + MRV}, \texttt{queens\$solve\_stack\_arc\_mrv@75e08420} steht für \textbf{BT + ARC + MRV} und \texttt{queens\$solve\_stack@3e55747} steht für \textbf{BT}.
+\begin{center}
+\includegraphics[scale=0.7]{chart_one.png} \\
+\includegraphics[scale=0.7]{chart_two.png} \\
+\includegraphics[scale=0.7]{chart_three.png} \\
+\end{center}
 
 \section*{Aufgabe 2}
 \begin{enumerate}[~~a)]
