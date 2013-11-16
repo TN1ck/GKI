@@ -6,14 +6,13 @@
 (defn solve-stack [n]
   "exacly the algorithm mentioned in the exercise"
   (let [domains (vec (for [i (range n)] (vec (range n))))
-        stack [[]]
         constrains [(fn [state] (= (count (distinct state)) (count state)))
                     (fn [state] (let [j (dec (count state))]
                                   (every? true? (for [i (range 0 j)]
                                                   (not= (Math/abs (- i j))
                                                         (Math/abs (- ((domains i) (nth state (- j i)))
                                                                      ((domains j) (first state)))))))))]]
-    (loop [[x & xs] stack]
+    (loop [[x & xs] [[]]]
       (if (or (nil? x) (= n (count x)))
         x
         (recur (concat (for [i (domains (count x))
@@ -25,7 +24,6 @@
 (defn solve-stack-fc-mrv [n]
   "exacly the algorithm mentioned in the exercise with forward checking and mrv"
   (let [domains-initial (zipmap (range n) (repeat (range n)))
-        stack [[{} domains-initial]]
         constrains [(fn [[x1 y1] [x2 y2]] (not= y1 y2))
                     (fn [[x1 y1] [x2 y2]]
                       (not= (Math/abs (- x1 x2))
@@ -34,7 +32,7 @@
                         (apply merge
                                (for [[x2 domain] domains]
                                  {x2 (filter (fn [y2] (every? true? (map #(% [x1 y1] [x2 y2]) constrains))) domain)})))]
-    (loop [[[state domains] & xs] stack]
+    (loop [[[state domains] & xs] [[{} domains-initial]]]
       (if (or (nil? state) (= n (count state)))
         (map second (sort state))
         (let [[x domain] (rand-nth ((comp second first) (sort (group-by (comp count second) domains))))
@@ -48,7 +46,6 @@
 (defn solve-stack-arc-mrv [n]
   "exacly the algorithm mentioned in the exercise with arc-consistency and mrv"
   (let [domains-initial (zipmap (range n) (repeat (range n)))
-        stack [[{} domains-initial]]
         constrains [(fn [[x1 y1] [x2 y2]] (not= y1 y2))
                     (fn [[x1 y1] [x2 y2]]
                       (not= (Math/abs (- x1 x2))
@@ -82,7 +79,7 @@
                                   (if (not= (sort d1-new) (sort d1))
                                     (recur (concat xs new-arcs) (assoc domains x1 d1-new))
                                     (recur xs domains)))))))]
-    (loop [[[state domains] & xs] stack]
+    (loop [[[state domains] & xs] [[{} domains-initial]]]
       (if (or (nil? state) (= n (count state)))
         (map second (sort state))
         (let [[x domain] (rand-nth ((comp second first)
@@ -96,6 +93,7 @@
           (recur (do (swap! counter (partial + (count states)))
                      (concat states xs))))))))
 
+
 (defmacro time
   "measures the time in msecs and returns it in a vector with the value of the expr"
   [expr]
@@ -106,7 +104,7 @@
 
 (defn test-suite []
   (let [funcs [solve-stack solve-stack-fc-mrv solve-stack-arc-mrv]
-        min-n 4
+        min-n 0
         max-n 30
         max-time (* 120 1000.0)]
     (loop [[f & fs] funcs results {}]
@@ -115,10 +113,11 @@
                  (assoc results
                    (str f)
                    (loop [[x & xs] (range min-n (inc max-n)) result []]
-                     (let [bla (reset! counter 0)
-                           [t r] (time (f x))
-                           result (conj result {:n x :time t :result r :nodes @counter})]
+                     (do (reset! counter 0)
+                         (println (str f) " - " (str x))
+                         (let [[t r] (time (f x))
+                               result (conj result {:n x :time t :result r :nodes @counter})]
                            (if (or (> t max-time) (empty? xs))
-                               result
-                               (recur xs result))))))))))
+                             result
+                             (recur xs result)))))))))))
 (test-suite)
