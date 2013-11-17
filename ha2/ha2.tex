@@ -282,6 +282,81 @@ Ergebnis: Wir finden eine Lösung für das CSP!
 
 \section*{Aufgabe 4}
 
+\begin{enumerate}[~~a)] 
+
+\item
+$(a,b,c,p_1,p_2,z)$\\
+$a, b, c$: Rohstoffe an den entsprechenden Knoten. \\
+$p_1, p_2$:  Positionen der entsprechenden Roboter. \\
+$z$: Welcher Roboter ist am Zug. \\
+Startzustand:\\
+$(2, 16, 16, a, b, 1)$
+
+\item ~\\
+\begin{center}
+    \begin{tikzpicture}[auto,bend angle=30,node distance=3cm]
+        \node[state, circle] (S) {};
+        \node[state, circle] (1)[below left of=S] {1};
+        \node[state, circle] (2)[below right of=S] {2};
+
+        \path[->, bend right] (S) edge node {bewegen(c)} (1);
+        \path[->, bend left] (S) edge node {bleiben} (2);
+
+        \node[state, circle] (3)[below left of=1] {3};
+        \node[state, circle] (4)[below right of=1] {4};
+        \node[state, circle] (5)[below right of=2] {5};
+
+        \path[->, bend right] (1) edge node {bleiben} (3);
+        \path[->, bend left] (1) edge node {bewegen(a)} (4);
+        \path[->, bend left] (2) edge node {bleiben} (5);
+
+        \node[state, circle] (6)[below left of=3] {6};
+        \node[state, circle] (7)[below right of=3] {7};
+        \node[state, circle] (8)[below of=4, node distance=2.12132cm] {8};
+        \node[state, circle] (9)[below left of=5] {9};
+        \node[state, circle] (10)[below right of=5] {10};
+
+        \path[->, bend right] (3) edge node {bleiben} (6);
+        \path[->, bend left] (3) edge node {bewegen(a)} (7);
+        \path[->, bend left] (4) edge node {bleiben} (8);
+        \path[->, bend right] (5) edge node {bewegen(c)} (9);
+        \path[->, bend left] (5) edge node {bleiben} (10);
+    \end{tikzpicture}
+\end{center}
+
+\begin{enumerate}[1:]
+
+\item $(2,16,8,c,b,2)$
+\item $(1,16,16,a,b,2)$
+\item $(2,8,8,c,b,1)$
+\item $(1,16,8,c,a,1)$
+\item $(1,8,16,a,b,1)$
+\item $(2,8,4,c,b,2)$
+\item $(1,8,8,a,b,2)$
+\item $(1,16,4,c,a,2)$
+\item $(1,8,8,c,b,2)$
+\item $(0,8,16,a,b,2)$
+
+\end{enumerate}
+
+\item
+
+$6: 4 | 7: 1 | 8: 11 | 9: 1 | 10: -6$ \\
+
+Nach dem Minimax-Algorithmus ist der beste Zug der Schritt zu C mit einem Ertrag von mindestens 1 nach der gegebenen Simulationstiefe.
+
+\item
+
+Die Nachfolgeknoten nach den Knoten 7 und 10 würden nach dem $\alpha$ -cutoff abgeschnitten werden. \\
+Die Nachfolgeknoten von 6, 8 und 9 müssten weiter untersucht werden.
+
+\item
+Bei der Aktuellen Baumtiefe sieht es so aus als sei es der beste Zug sofort zu c zu wechseln. Wenn allerdings der a-Knoten zuerst völlig ausgeschöpft wird kann Roboter 1 mit absoluter Sicherheit gewinnen. 
+
+\item
+%TODO
+\end{enumerate}
+
 \section*{Aufgabe 5}
 \begin{enumerate}[~~a)]
 
