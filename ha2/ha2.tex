@@ -192,11 +192,9 @@ Alle Aufgaben wurden in \textbf{Clojure1 1.5} geschrieben und benutzen nichts au
                                 domains
                                 (let [d1 (domains x1)
                                       d2 (domains x2)
-                                      d1-new (for [y1 d1
-                                                   :when (not (empty? (filter (fn [y2]
-                                                                   (every? true? (map #(% [x1 y1]
-                                                                                          [x2 y2])
-                                                                                      constrains))) d2)))] y1)
+                                      d1-new (filter (fn [y1]
+                                               (some (fn [y2] (every? true? (map #(% [x1 y1] [x2 y2]) 
+                                                                                   constrains))) d2)) d1)
                                       new-arcs (for [[x3 y3] domains
                                                      :when (and (not= x3 x2) (not= x3 x1))] [x3 x1])]
                                   (if (not= (sort d1-new) (sort d1))
@@ -219,7 +217,7 @@ Alle Aufgaben wurden in \textbf{Clojure1 1.5} geschrieben und benutzen nichts au
 \textbf{Erklärung}
 \begin{itemize}
   \item \textbf{domains-initial und constrains} Genau wie in forward-check.
-    \item \textbf{arc-conistency} Bekommt als Eingabe alle Domains, wobei die Domains von gesetzten Damen einstellig sind.
+    \item \textbf{arc-conistency} Bekommt als Eingabe alle Domains, wobei die Domains von gesetzten Damen einstellig sind. Gibt die \textit{bereinigten} Domains zurück.
     \item \textbf{loop} Ziemlich genau wie beim forward-check, nur entfernen wir nicht die belegten Variablen aus \texttt{domains} da wir die Belegung für den arc-consistency check brauchen. Dadurch hat sich aber etwas die Berechnung für die nächste Varibale geändert (nur Variablen aus \texttt{domains} deren key noch nicht in \texttt{state} ist): \texttt{(filter (fn [[x d]] (not (state x))) domains)}. Für den aktuellen Zustand werden dann wieder die Folgezustände asugerechnet, wobei keiner eine leere domain haben darf: \texttt{:when (empty? (filter (fn [[x d]] (zero? (count d))) domains-new))}.
 \end{itemize}
 \newpage
