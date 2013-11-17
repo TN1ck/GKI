@@ -103,7 +103,7 @@ with-meta,with-open,with-out-str,with-precision,xml-seq,zero?,zipmap
 Tom Nick \hspace{2cm}\= - 340528\\
 Niklas Gebauer \> - 340942 \\
 Leonard Witte \> - 341457 \\
-Johannes Herrmann \> - xxxxxx\\
+Johannes Herrmann \> - 341091\\
 \end{tabbing}
 
 \section*{Aufgabe 1}
@@ -357,7 +357,8 @@ Die Nachfolgeknoten von 6, 8 und 9 müssten weiter untersucht werden.
 Bei der Aktuellen Baumtiefe sieht es so aus als sei es der beste Zug sofort zu c zu wechseln. Wenn allerdings der a-Knoten zuerst völlig ausgeschöpft wird kann Roboter 1 mit absoluter Sicherheit gewinnen. 
 
 \item
-%TODO
+Man könnte die zuerst erreichbaren Gebiete in Betracht ziehen.
+Also man schaut sich zuerst den Knoten an auf dem der Roboter steht, der als nächstes am Zug ist und rechnet ihm die restlichen Ressourcen an. Dann macht man das selbe für den zweiten Roboter. Anschließend schaut man alle Knoten an die die Roboter in einem/zwei/drei... Schritten erreichen können, immer angefangen mit dem Roboter der als nächstes am Zug ist. Die Wegkosten zu den Knoten werden hierbei immer von der Ressourcen auf dem Knoten abgezogen. Wenn ein Knoten auf 2 gleichlangen Wegen erreicht werden kann nimmt man den billigeren ansonsten den kürzeren. Wenn man einen Knoten erreicht den der Gegner bereits schneller erreicht hat wird dieser ignoriert. Die Bewertung eines Zustandes ist dann die Differenz der Punkte die die Roboter jeweils schnell erreichen können.
 \end{enumerate}
 
 \section*{Aufgabe 5}
