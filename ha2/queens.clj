@@ -61,18 +61,9 @@
                                 domains
                                 (let [d1 (domains x1)
                                       d2 (domains x2)
-                                      d1-new (loop [[y1 & ys] d1 d1new []]
-                                               (if (nil? y1)
-                                                 d1new
-                                                 (let [xy (for [y2 d2]
-                                                            [[x1 y1] [x2 y2]])
-                                                       xy1 (map (comp second first)
-                                                                (filter (fn [[[x1 y1] [x2 y2]]]
-                                                                          (every? true? (map #(% [x1 y1] [x2 y2]) constrains)))
-                                                                        xy))]
-                                                   (if (empty? xy1)
-                                                     (recur ys d1new)
-                                                     (recur ys (cons y1 d1new))))))
+                                      d1-new (filter (fn [y1]
+                                               (some (fn [y2] (every? true? (map #(% [x1 y1] [x2 y2])
+                                                                                   constrains))) d2)) d1)
                                       new-arcs (for [[x3 y3] domains
                                                      :when (and (not= x3 x2) (not= x3 x1))] [x3 x1])]
                                   (if (not= (sort d1-new) (sort d1))
