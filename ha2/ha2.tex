@@ -108,7 +108,7 @@ Johannes Herrmann \> - xxxxxx\\
 
 \section*{Aufgabe 1}
 
-Alle Aufgaben wurden in \textbf{Clojure1 1.5} geschrieben und benutzen nichts außer \textit{clojure.core} als namespace.
+Alle Aufgaben wurden in \textbf{Clojure 1.5} geschrieben. Um das ganze auszuführen ist es empfohlen Leiningen zu installieren und im Dateiordner \texttt{lein repl} gefolgt von \texttt{(load-file "queens.clj")} im Terminal einzugeben, dies führt die Funktion \texttt{test-suite} aus, welche für alle 3 Varianten von 0 bis 30, die Ausführungszeit, die Anzahl expandierter Knoten und das Ergebnis protokolliert. Falls ein Ergebnis länger als 120s dauert wird mit der nächsten Funktion weitergemacht.
 \subsubsection*{Backtracking}
 \begin{lstlisting}
 (def counter (atom 0))
@@ -167,8 +167,8 @@ Alle Aufgaben wurden in \textbf{Clojure1 1.5} geschrieben und benutzen nichts au
 \textbf{Erklärung}
 \begin{itemize}
   \item \textbf{domains-initial} repräsentiert die initiellen Domains einer jeden Dame und sieht für \texttt{n = 2} so aus: \texttt{\{0: [0 1], 1: [0 1]\}}. Also dictionary/map wo die keys die jeweilige Dame sind und die values die Domain der Dame.
-    \item \textbf{constrains} ist eine Liste aus Funktionen die jeweils einen 2 x/y Koordinaten bekommen, jede Koordinate ist die Position einer Dame. Sie überprüfen ob die Damen sich horizontal oder diagonal schlagen können.
-    \item \textbf{forward-check} Dies ist der forward-check, die Funktion bekommt die Position der zu setzenden Dame \texttt{x1 y1} und die aktuellen Domains \texttt{domains}, wobei die Domain der zu setzenden Dame entfernt wurde. Sie liefert die \textit{bereinigten} Domains zurück.
+    \item \textbf{constrains} ist eine Liste aus Funktionen die jeweils zwei x/y Koordinaten bekommen, jede Koordinate ist die Position einer Dame. Sie überprüfen ob die Damen sich horizontal oder diagonal schlagen können.
+    \item \textbf{forward-check} Dies ist der forward-check, die Funktion bekommt die Position der zu setzenden Dame \texttt{x1 y1} und die aktuellen Domains \texttt{domains}, wobei die Domain der zu setzenden Dame entfernt wurde. Bei Rückgabe enthalten die Domains nur noch konsistente Werte.
     \item \textbf{loop} Jeder \textit{Node} wird mittels eines Vektors aus Belegung und Domains dargestellt, der Start-stack besteht damit aus einem \textit{Node} der wiederum aus einer leeren Belegung hat und den initiellen Domains besteht: \texttt{[{} domains-initial]}. Der Rekursionsanker ist ähnlich wie zuvor. Wenn die Funktion nicht terminiert bestimmt sie nach \textbf{mrv-Prinzip} den nächsten Wert \texttt{(rand-nth ...)}. Die Domain für diesen Wert wird entfernt (siehe forward-check), mittels list-comprehension werden alle gültigen nächsten Zustände ermittelt, bei welchen der Forward-check die Domains eingeschränkt hat. Falls es keine gültigen Folgezustände für die aktuelle Belegung gibt, ist \textbf{states} leer, und im nächsten Rekursionschritt wird der eine andere Belegung getestet: \texttt{(recur (concat states xs))}. \texttt{(swap!..)} ist dafür da den Counter hochzuzählen.
 \end{itemize}
 \newpage
@@ -217,7 +217,7 @@ Alle Aufgaben wurden in \textbf{Clojure1 1.5} geschrieben und benutzen nichts au
 \textbf{Erklärung}
 \begin{itemize}
   \item \textbf{domains-initial und constrains} Genau wie in forward-check.
-    \item \textbf{arc-conistency} Bekommt als Eingabe alle Domains, wobei die Domains von gesetzten Damen einstellig sind. Gibt die \textit{bereinigten} Domains zurück.
+    \item \textbf{arc-consistency} Bekommt als Eingabe alle Domains, wobei die Domains von gesetzten Damen einstellig sind. Bei Rückgabe enthalten die Domains nur noch konsistente Werte.
     \item \textbf{loop} Ziemlich genau wie beim forward-check, nur entfernen wir nicht die belegten Variablen aus \texttt{domains} da wir die Belegung für den arc-consistency check brauchen. Dadurch hat sich aber etwas die Berechnung für die nächste Varibale geändert (nur Variablen aus \texttt{domains} deren key noch nicht in \texttt{state} ist): \texttt{(filter (fn [[x d]] (not (state x))) domains)}. Für den aktuellen Zustand werden dann wieder die Folgezustände asugerechnet, wobei keiner eine leere domain haben darf: \texttt{:when (empty? (filter (fn [[x d]] (zero? (count d))) domains-new))}.
 \end{itemize}
 \newpage
@@ -226,9 +226,11 @@ Alle Grafiken wurden mit nvd3.js + d3.js erstellt und die interaktiven Versionen
 \begin{center}
 \includegraphics[scale=0.7]{chart_one.png} \\
 \includegraphics[scale=0.7]{chart_two.png} \\
+Nochmal ohne \texttt{solve-stack}, Logarithmische Skala hat nicht so richtig funktioniert:
 \includegraphics[scale=0.7]{chart_three.png} \\
 \end{center}
 
+Man erkennt deutlich, dass bei reinem Backtracking die Anzahl der überprüften Knoten rapide steigt bei etwa \texttt{n = 20}, wodurch auch die gebrauchte Zeit über 2 Minuten steigt. Mithilfe von FC/ARC steigen die expandierten Knoten sehr moderat mit $n$, bis 30 ist kein merkenswerter Anstieg zu sehen. Die Berechnung der konsistenten Werte ist bei ARC jedoch um ein vielfaches höher als bei FC, weshalb die Zeit hier deutlich schneller steigt als bei FC.
 \section*{Aufgabe 2}
 \begin{enumerate}[~~a)]
 
