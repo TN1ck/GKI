@@ -357,8 +357,32 @@ Die Nachfolgeknoten von 6, 8 und 9 müssten weiter untersucht werden.
 Bei der Aktuellen Baumtiefe sieht es so aus als sei es der beste Zug sofort zu c zu wechseln. Wenn allerdings der a-Knoten zuerst völlig ausgeschöpft wird kann Roboter 1 mit absoluter Sicherheit gewinnen. 
 
 \item
-Man könnte die zuerst erreichbaren Gebiete in Betracht ziehen.
-Also man schaut sich zuerst den Knoten an auf dem der Roboter steht, der als nächstes am Zug ist und rechnet ihm die restlichen Ressourcen an. Dann macht man das selbe für den zweiten Roboter. Anschließend schaut man alle Knoten an die die Roboter in einem/zwei/drei... Schritten erreichen können, immer angefangen mit dem Roboter der als nächstes am Zug ist. Die Wegkosten zu den Knoten werden hierbei immer von der Ressourcen auf dem Knoten abgezogen. Wenn ein Knoten auf 2 gleichlangen Wegen erreicht werden kann nimmt man den billigeren ansonsten den kürzeren. Wenn man einen Knoten erreicht den der Gegner bereits schneller erreicht hat wird dieser ignoriert. Die Bewertung eines Zustandes ist dann die Differenz der Punkte die die Roboter jeweils schnell erreichen können.
+Eine Idee für eine Bewertungsfunktion ist die jeweiligen Knoten zu betrachten die man vor dem Gegner erreichen kann.	
+Die Bewertung eines Zustandes im Spiel kann man durch den folgenden Algorithmus bekommen:
+Sei $n=0$, färbe alle Knoten weiß und habe jeder Roboter ein Konto mit seinen aktuellen Ressourcen.
+\begin{enumerate}[1)]
+\item
+Man betrachte alle Knoten die der Roboter in n Schritten erreichen kann, der als nächstes am Zug ist. Hierbei muss man in Betracht ziehen, dass manche Knoten nicht erreichbar sind, da der andere Roboter den Weg blockiert
+\begin{enumerate}[~~-]
+\item
+Bei einem weißen Knoten addiert der Roboter die Ressourcen des Knoten minus den Wegkosten zu diesen Knoten auf sein Konto.
+\item 
+Bei einen Knoten der auf zwei Wegen erreichbar ist nimmt man den kostengünstigeren Weg. 
+\item
+ Graue Knoten ignoriert man.
+\end{enumerate}
+\item 
+Anschließend färbt man alle gerade besuchten Knoten grau.
+\item 
+Nun werden die ersten beiden Schritte mit dem anderen Roboter wiederholt.
+\item
+Erhöhe n um 1 und führe Schritte 1 bis 4 durch, bis alle Knoten grau sind.
+\item
+Das Ergebnis ist die Differenz der beiden Konten der Roboter.
+\end{enumerate}
+
+Diese Bewertung zieht halt nicht nur in Betracht wie viele Ressourcen die Roboter bereits gesammelt haben, sondern auch wie viel sie jeweils potentiell noch sammeln könnten. Somit würde auch im obigen Beispiel der erste Roboter sich nicht gleich auf c stürzen um dort schnell Ressourcen zu sammeln sondern auf a bleiben um den 2. Roboter zu blockieren.
+
 \end{enumerate}
 
 \section*{Aufgabe 5}
