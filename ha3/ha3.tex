@@ -111,11 +111,11 @@ Johannes Herrmann \> - 341091\\
 \begin{enumerate}[~~a)]
     \item $\forall x (Stack(x) \Rightarrow ((\exists y (Block(y) \land in(y,x))) \land (\forall y(in(y,x) \Rightarrow Block(y)))))$
 
-    \item $\forall x (Stack(x) \Rightarrow \exists y ((Block(y) \land in(y,x) \land on(y,T)) \land \forall z (Block(z) \Rightarrow (in(z,x) \Rightarrow (on(z,T) \Rightarrow z=y)))))$
+    \item $\forall x (Stack(x) \Rightarrow \exists y ((Block(y) \land in(y,x) \land on(y,T)) \land \forall z ((Block(z) \land in(z,x) \land on(z,T)) \Rightarrow z=y)))$
 
-    \item $\forall x (Block(x) \Rightarrow ((\exists y (Block(y) \land on(x,y))) \lor (on(x,T))))$
+    \item $\forall x (Block(x) \Rightarrow ( (\lnot\exists y ((Block(y) \land on(x,y)) \land on(x,T)) \lor (\exists y (Block(y) \land on(x,y)) \land \lnot on(x,T) )))$
 
-    \item $\forall x Block(x) \Rightarrow ((\lnot \exists y (Block(y) \land on(y,x))) \Rightarrow top(x))$
+    \item $\forall x (Block(x) \land \lnot \exists y (Block(y) \land on(y,x))) \Rightarrow top(x)$
 
     \item $\forall x \forall y (Block(x) \land Block(y)) \Rightarrow ((on(x,y) \lor \exists z (Stack(z) \land on(x,z) \land on(z,y))) \Rightarrow over(x,y))$
 
