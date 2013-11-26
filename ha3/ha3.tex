@@ -144,7 +144,18 @@ Wir schreiben für jede Iteration jeweils $\theta$ und $L\theta$ auf. Die unters
 
 \begin{enumerate}[~~a)]
     \item
-
+Die Formeln in KNF:
+\begin{align*}
+&(1) \lnot BE(x,GKI) \lor \lnot Ge(x, Poker) \lor Fr(x)\\
+&(2) (\lnot Fl(x) \lor Be(x,y)) \land (\lnot In(x) \lor Be(x,y))\\
+&(3) \lnot Be(x,y) \lor Te(x,f(x,y))\\
+&(4) \lnot In(x) \lor Ge(x, Poker)\\
+&(5) \& (6) \textit{ sind bereits in KNF}
+\end{align*}
+In Mengenschreibweise mit umbenannten Variablen:
+\begin{align*}
+\{\{\lnot Be(x, GKI), \lnot Ge(x,Poker) , Fr(x) \} , \{\lnot Fl(a), Be(a,b)\}, \{ \lnot In(c), Be(c,d)\} ,\\ \{\lnot Be(e,g), Te(e,f(e,g))\},\{\lnot In(h), Ge(h, Poker)\}, \{\lnot Fl(O)\}, \{In(O)\}, \{Fl(S)\}, \{\lnot In(S)\}\}
+\end{align*}
     \item
 
     \item
@@ -155,5 +166,20 @@ Wir schreiben für jede Iteration jeweils $\theta$ und $L\theta$ auf. Die unters
 \end{enumerate}
 
 \section*{Aufgabe 5}
-
+Ursprüngliche Klauseln:\\
+(1) $\{P(f(w)), Q(f(x))\}$\\
+(2) $\{ \lnot P(f(1)), \lnot P(y) \}$\\
+(3) $\{Q(g(z)), Q(g(f(f(z))))\}$\\
+(4) $\{\lnot Q(f(g(1))), \lnot Q(g(f(v))), \lnot Q(g(v))\}$\\
+\\
+Resolutionsbeweis:\\
+\begin{align*}
+(5) &\{\lnot P(y), Q(f(x))\} &&\dashv (1) \& (2), \{w/1\}\\
+(6) &\{Q(f(x))\} &&\dashv (1) \& (5), \{y/f(w)\}\\
+(7) &\{\lnot Q(f(g(1))), \lnot Q(g(f(a))), Q(g(f(f(a))))\} &&\dashv (3) \& 		(4), \{z/v,v/a\}\\
+(8) &\{\lnot Q(f(g(1))), \lnot Q(g(f(b)))\} &&\dashv (4) \& (7), \{v/f(a), 		a/b\}\\
+(9) &\{\lnot Q(g(f(b)))\} &&\dashv (6) \& (8), \{x/g(1)\}\\
+(10) &\{Q(g(z))\} &&\dashv (3) \& (9), \{b/f(z)\}\\
+(11) &\{\} &&\dashv (9) \& (10), \{z/f(b)\}\\
+\end{align*}
 \end{document}
