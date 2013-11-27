@@ -152,12 +152,39 @@ Die Formeln in KNF:
 &(4) \lnot In(x) \lor Ge(x, Poker)\\
 &(5) \& (6) \textit{ sind bereits in KNF}
 \end{align*}
-In Mengenschreibweise mit umbenannten Variablen:
+Die Klauseln Mengenschreibweise mit umbenannten Variablen (nummeriert für die nächsten Teilaufgaben):
 \begin{align*}
-\{\{\lnot Be(x, GKI), \lnot Ge(x,Poker) , Fr(x) \} , \{\lnot Fl(a), Be(a,b)\}, \{ \lnot In(c), Be(c,d)\} ,\\ \{\lnot Be(e,g), Te(e,f(e,g))\},\{\lnot In(h), Ge(h, Poker)\}, \{\lnot Fl(O)\}, \{In(O)\}, \{Fl(S)\}, \{\lnot In(S)\}\}
+(1) &\{\lnot Be(x, GKI), \lnot Ge(x,Poker) , Fr(x) \},&\\
+(2) &\{\lnot Fl(a), Be(a,b)\},\\
+(3) &\{ \lnot In(c), Be(c,d)\},\\
+(4) &\{\lnot Be(e,g), Te(e,f(e,g))\},\\
+(5) &\{\lnot In(h), Ge(h, Poker)\},\\
+(6) &\{\lnot Fl(O)\},\\
+(7) &\{In(O)\},\\
+(8) &\{Fl(S)\},\\
+(9) &\{\lnot In(S)\}
 \end{align*}
     \item
-
+Um zu prüfen, wer froh ist, stellen wir folgende Formel auf:
+\begin{align*}
+\exists y(Fr(y))
+\end{align*}
+Diese Formel drückt aus, dass es jemanden gibt, der froh ist. Wir wollen nun testen:
+\begin{align*}
+KB \vDash \exists y (Fr(y))
+\end{align*}
+Um diese Inferenz mittels Resolution beweisen zu können, müssen wir die negierte Anfrage als Klausel zur Wissensbasis hinzufügen und einen Widerspruch herleiten (wir verwenden die Klauseln und Nummerierung aus 4 a) und fahren nun hier direkt mit der negierten Anfrage als Klause fort):
+\begin{align*}
+(10) &\{\lnot Fr(y)\}
+\end{align*}
+Resolution:
+\begin{align*}
+(11) &\{\lnot Be(y, GKI), \lnot Ge(y,Poker)\} &&\dashv (1) \& (10), \{x/y\}\\
+(12) &\{\lnot In(y),\lnot Ge(y,Poker)\} &&\dashv (3) \& (11), \{x/y,d/Poker\}\\
+(13) &\{\lnot In(y)\} &&\dashv (5) \& (12), \{h/y)\}\\
+(14) &\{\} && \dashv (7) \& (13), \{y/O\}\\
+\end{align*}
+Da wir mit unserer Anfrage einen Widerspruch herleiten konnten, haben wir somit gefolgert, dass es jemanden gibt, der schlau ist. Wenn man die Substitutionen betrachtet, sieht man, dass es Olli ist (wegen der letzten Substitution $\{y/O\}$ muss gelten $Fr(O)$).
     \item
 
     \item
