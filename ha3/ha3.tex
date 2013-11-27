@@ -208,6 +208,25 @@ Also ergibt sich mit diesen Überlegungen insgesamt folgende Hornklausel-Wissens
     \item
 
     \item
+    Wir möchten wieder
+    \begin{align*}
+KB \vDash \exists y (Fr(y))
+\end{align*}
+	beweisen.\\
+    Wir führen für den Vorwärtsverkettungsbeweis die Nummerierung aus 4 c) fort und geben in jeder Iteration das neu hinzugewonnene Wissen und aus welchen Regeln und Fakten es gefolgert wurde inklusive der Substitutionen an:\\
+    \begin{align*}
+    \text{1. Iteration:}&\\
+    (8) &Be(O,b) &&\dashv (3),(6),\{a/O\}\\
+    (9) &Ge(O,Poker) &&\dashv (5),(6),\{e/O\}\\
+    (10) &Be(S,z) &&\dashv (2),(7),\{y/S\}\\
+    \text{2. Iteration:}&\\
+    (11) &Fr(O) &&\dashv (1),(8),(9),\{x/O,b/GKI\}\\
+    (12) &Te(O,f(O,b)) &&\dashv (4),(8),\{c/O,d/b\}\\
+    (13) &Te(S,f(O,z)) &&\dashv (4),(10),\{c/S,d/z\}\\
+    \text{3. Iteration:}&\\
+    &Fr(y) \{y/O\} \in \{(11),(12),(13)\}
+    \end{align*}
+    Da wir das Ziel $Fr(y)$ durch Unifikation mit $(11)$ erreicht haben, terminiert der Algorithmus und gibt $\{y/O\}$ zurück, also haben wir mittels Vorwärtsverkettung bewiesen, dass Olli froh ist.
 \end{enumerate}
 
 \section*{Aufgabe 5}
