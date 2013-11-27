@@ -207,15 +207,14 @@ Also ergibt sich mit diesen Überlegungen insgesamt folgende Hornklausel-Wissens
 \end{align*}
     \item
 \begin{align*}
-(1)&[Fr(O),Te(S,f(S,GKI)),Te(O,f(O,GKI)),Be(S,GKI),Be(O,GKI),Ge(O,Poker)]\\
-(2)&[Be(O,GKI),Ge(O,Poker),Te(S,f(S,GKI)),Te(O,f(O,GKI)),Be(S,GKI)] &&\dashv (1) \{x/GKI\} \\
-(3)&[Be(O,GKI),Ge(O,Poker),Be(S,GKI),Te(O,f(O,GKI))] &&\dashv (4) \{c/S,d/GKI\} \\
-(4)&[Ge(O,Poker),Be(S,GKI),Be(O,GKI)] &&\dashv (4) \{c/O,d/GKI\} \\
-(5)&[In(O),Be(S,GKI),Be(O,GKI)] &&\dashv (5) \{e/O\} \\
-(6)&[Be(S,GKI),In(O)] &&\dashv (3) \{a/O,b/GKI\} \\
-(7)&[Be(S,GKI)] &&\dashv (6) \\
-(8)&[Fl(S)] &&\dashv (2) \{y/S,z/GKI\} \\
-(9)&[] &&\dashv (7) \\
+(1)&[Fr(O)]\\
+(2)&[Be(O,GKI),Ge(O,Poker)] &&\dashv (1) \{x/GKI\} \\
+(3)&[Be(O,GKI),In(O)] &&\dashv (5) \{e/O\} \\
+(4)&[Be(O,GKI)] &&\dashv (6) \\
+(5)&[Fl(O)] &&\dashv (2) \{y/O,z/GKI\} \\
+fail \\\\
+(5)&[In(O)] &&\dashv (3) \{a/O,b/GKI\} \\
+(6)&[] &&\dashv (6) \\
 \end{align*}
     \item
     Wir möchten wieder
