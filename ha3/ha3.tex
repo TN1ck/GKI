@@ -146,13 +146,13 @@ Wir schreiben für jede Iteration jeweils $\theta$ und $L\theta$ auf. Die unters
     \item
 Die Formeln in KNF:
 \begin{align*}
-&(1) \lnot BE(x,GKI) \lor \lnot Ge(x, Poker) \lor Fr(x)\\
+&(1) \lnot Be(x,GKI) \lor \lnot Ge(x, Poker) \lor Fr(x)\\
 &(2) (\lnot Fl(x) \lor Be(x,y)) \land (\lnot In(x) \lor Be(x,y))\\
 &(3) \lnot Be(x,y) \lor Te(x,f(x,y))\\
 &(4) \lnot In(x) \lor Ge(x, Poker)\\
 &(5) \& (6) \textit{ sind bereits in KNF}
 \end{align*}
-Die Klauseln Mengenschreibweise mit umbenannten Variablen (nummeriert für die nächsten Teilaufgaben):
+Die Klauseln Mengenschreibweise mit umbenannten Variablen (nummeriert für die nächste Teilaufgabe):
 \begin{align*}
 (1) &\{\lnot Be(x, GKI), \lnot Ge(x,Poker) , Fr(x) \}\\
 (2) &\{\lnot Fl(a), Be(a,b)\}\\
@@ -189,7 +189,22 @@ Da wir mit unserer Anfrage einen Widerspruch herleiten konnten, haben wir somit 
 KB \vDash \exists y (Fr(y))
 \end{align*}
     \item
-
+Wie man in 4 a) sehen kann, lässt sich Formel (2) vom Aufgabenblatt in zwei Klauseln umformen. Somit können wir einfach zwei Regeln als definite Hornformeln aufstellen, die (2) vom Aufgabenblatt in unserer Hornklausel-Wissensbasis repräsentieren:
+\begin{align*}
+Fl(x) \Rightarrow Be(x,y)
+In (x) \Rightarrow Be(x,y)
+\end{align*}
+Die negativen Literale aus (5) und (6) können wir einfach ignorieren, da sie für die Inferenzregel, welche wir bei der Vorwärts- bzw. Rückwärtsverkettung benutzen (den generalisierten Modus Ponens), irrelevant sind. Denn wir können mit dieser Regel, die für definite Hornklausel-Wissensbasen vollständig ist, lediglich aus Fakten ('unnegiertem' Wissen) neues Wissen folgern.
+Also ergibt sich mit diesen Überlegungen insgesamt folgende Hornklausel-Wissensbasis (die Variablen haben wir für die Formeln paarweise disjunkt benannt):
+\begin{align*}
+(1) &Be(x,GKI)\land Ge(x,Poker) \Rightarrow Fr(x)\\
+(2) &Fl(y) \Rightarrow Be(y,z)\\
+(3) &In (a) \Rightarrow Be(a,b)\\
+(4) &Be(c,d) \Rightarrow Te(c,f(c,d))\\
+(5) &In(e) \Rightarrow Ge(e,Poker)\\
+(6) &In(O)\\
+(7) &Fl(S)
+\end{align*}
     \item
 
     \item
