@@ -42,4 +42,65 @@ Johannes Herrmann \> - 341091\\
 \end{tabbing}
 
 \section*{Aufgabe 1}
+\begin{enumerate}[~~a.)]
+    \item Formulierung des Problems in STRIPS \\
+    \textbf{Konstanten und Prädikate}
+    \begin{tabbing}
+    Gang,       \hspace{4cm}          \= Gang \\
+    Raum1, Raum2, Raum3               \> Räume \\
+    Kiste1, Kiste2, Kiste3            \> Kiste \\
+    Raum(x)                           \> x ist ein Raum \\
+    Kiste(x)                          \> x ist ein Kiste \\
+    Standort(s),                      \> Der Standort (Raum oder Gang) s des Roboters \\
+    offen(r),                         \> Die Tür des Raumes r ist offen \\
+    geschlossen(r),                   \> Die Tür des Raumes r ist geschlossen \\
+    in(k, s),                         \> Kiste k liegt in Standort s \\
+    hält(k),                          \> Roboter hält Kiste k \\
+    frei,                             \> Roboter hält nichts \\
+    \end{tabbing} 
+    \textbf{Aktionen}
+    \begin{tabbing}
+    ACT: \= \textbf{verlassen(r)}: \\
+         \> PRE: ~ \= Standort(r), Raum(r), offen(r) \\
+         \> ADD:   \> Standort(Gang) \\
+         \> DEL:   \> Standort(r) \\
+    \\
+    ACT: \> \textbf{betreten(r)}: \\
+         \> PRE:   \> Standort(Gang), Raum(r), offen(r) \\
+         \> ADD:   \> Standort(r) \\
+         \> DEL:   \> Standort(Gang) \\
+    \\
+    ACT: \> \textbf{öffnen(r)}: \\
+         \> PRE:   \> Raum(r), geschlossen(r), frei \\
+         \> ADD:   \> offen(r) \\
+         \> DEL:   \> geschlossen(r) \\
+    \\
+    ACT: \> \textbf{schließen(r)}: \\
+         \> PRE:   \> Raum(r), offen(r), frei \\
+         \> ADD:   \> offen(r) \\
+         \> DEL:   \> geschlossen(r) \\
+    \\
+    ACT: \> \textbf{nehmen(k)}: \\
+         \> PRE:   \> Standort(x), Kiste(k), in(k, x), frei \\
+         \> ADD:   \> hält(k) \\
+         \> DEL:   \> frei, in(k, x) \\
+    \\
+    ACT: \> \textbf{ablegen(k)}: \\
+         \> PRE:   \> Standort(x), Kiste(k), hält(k) \\
+         \> ADD:   \> frei, in(k, x) \\
+         \> DEL:   \> hält(k), in(k, x) \\
+    \end{tabbing}
+    \textbf{Startzustand}:
+    \begin{align*}
+    S_0 = \{&\textrm{geschlossen(Raum1),geschlossen(Raum2), geschlossen(Raum3),} \\
+            &\textrm{Standort(Raum1), frei,} \\
+            &\textrm{Raum(Raum1), Raum(Raum2), Raum(Raum3),} \\
+            &\textrm{in(Kiste1, Raum1), in(Kiste2, Raum2), in(Kiste3,Raum3), }\\
+            &\textrm{Kiste(Kiste1), Kiste(Kiste2), Kiste(Kiste3)}\}
+    \end{align*}
+    \textbf{Zielzustand}:
+    \begin{align*}
+    S_Z = \{&\textrm{in(Kiste1, Raum1), in(Kiste2, Raum1), in(Kiste3, Raum1)}\}
+    \end{align*}
+\end{enumerate}
 \end{document}
