@@ -88,7 +88,7 @@ Johannes Herrmann \> - 341091\\
         ACT: \> \textbf{ablegen(k)}: \\
              \> PRE:   \> Standort(x), Kiste(k), hält(k) \\
              \> ADD:   \> frei, in(k, x) \\
-             \> DEL:   \> hält(k), in(k, x) \\
+             \> DEL:   \> hält(k) \\
         \end{tabbing}
         \textbf{Startzustand}:
         \begin{align*}
@@ -113,6 +113,14 @@ Johannes Herrmann \> - 341091\\
         \end{center}
         \item Plan der auf einer inkosistenten Aktion endet:
         $$\textrm{öffnen(Raum1), nehmen(Kiste1)}$$
+    \end{enumerate}
+    \item Rückwärtsplanung
+    \begin{enumerate}[~~i)]
+    	\item Lediglich die Aktionen \textbf{ablegen(k)} mit
+    	\begin{align*}
+    	k \in \{\text{Kiste1, Kiste2, Kiste3, Raum1, Raum2, Raum3, Gang}\}
+    	\end{align*}
+    	führen in den Zielzustand, da bei keiner anderen Aktion ein in(k, 			x) im ADD steht. 
     \end{enumerate}
 \end{enumerate}
 \end{document}
