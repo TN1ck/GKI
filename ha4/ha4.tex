@@ -77,15 +77,15 @@ Johannes Herrmann \> - 341091\\
         \\
         ACT: \> \textbf{schließen(r)}: \\
              \> PRE:   \> Raum(r), offen(r), frei \\
-             \> ADD:   \> offen(r) \\
-             \> DEL:   \> geschlossen(r) \\
+             \> ADD:   \> geschlossen(r) \\
+             \> DEL:   \> offen(r) \\
         \\
-        ACT: \> \textbf{nehmen(k)}: \\
+        ACT: \> \textbf{nehmen(k, x)}: \\
              \> PRE:   \> Standort(x), Kiste(k), in(k, x), frei \\
              \> ADD:   \> hält(k) \\
              \> DEL:   \> frei, in(k, x) \\
         \\
-        ACT: \> \textbf{ablegen(k)}: \\
+        ACT: \> \textbf{ablegen(k, x)}: \\
              \> PRE:   \> Standort(x), Kiste(k), hält(k) \\
              \> ADD:   \> frei, in(k, x) \\
              \> DEL:   \> hält(k) \\
@@ -105,22 +105,31 @@ Johannes Herrmann \> - 341091\\
     \item Vorwärtsplanung
     \begin{enumerate}[~~i)]
         \item Die möglichen Aktionen im Startzustand sind:
-        $$\{ \textrm{nehmen(Kiste1), öffnen(Raum1), öffnen(Raum2), öffnen(Raum3)} \}$$
+        $$\{ \textrm{nehmen(Kiste1, Raum1), öffnen(Raum1), öffnen(Raum2), öffnen(Raum3)} \}$$
         \item Plan der auf einer konsistenten und relevanten Aktion endet:
         \begin{center}
          öffnen(Raum1), verlassen(Raum1), öffnen(Raum2), betreten(Raum2), \\
-         nehmen(Kiste2), verlassen(Raum2), betreten(Raum1), ablegen(Kiste2)
+         nehmen(Kiste2, Raum2), verlassen(Raum2), betreten(Raum1), ablegen(Kiste2, Raum1)
         \end{center}
         \item Plan der auf einer inkosistenten Aktion endet:
-        $$\textrm{öffnen(Raum1), nehmen(Kiste1)}$$
+        $$\textrm{öffnen(Raum1), nehmen(Kiste1, Raum1)}$$
     \end{enumerate}
     \item Rückwärtsplanung
     \begin{enumerate}[~~i)]
-    	\item Lediglich die Aktionen \textbf{ablegen(k)} mit
+    	\item Lediglich die Aktionen \textbf{ablegen(k, Raum1)} mit
     	\begin{align*}
-    	k \in \{\text{Kiste1, Kiste2, Kiste3, Raum1, Raum2, Raum3, Gang}\}
+    	\textrm{k} \in \{\textrm{Kiste1, Kiste2, Kiste3}\}
     	\end{align*}
-    	führen in den Zielzustand, da bei keiner anderen Aktion ein in(k, 			x) im ADD steht. 
+    	führen in den Zielzustand, da bei keiner anderen Aktion ein in(k, 			x) im ADD steht und k eine der Kisten und x Raum1 sein muss. 
+    	\item Keine der drei möglichen Aktionen resultiert in einem 				unmöglichen Vorgängerzustand.
+    	\item Für die Aktion \textbf{ablegen(Kiste3, Raum1)}:
+    	\begin{align*}
+    	S_{Z-1} = \{\textrm{Standort(Raum1), Kiste(Kiste3), hält(Kiste3), 			in(Kiste2, Raum1), in(Kiste1, Raum1)}\}
+    	\end{align*}
+    	Für die Aktion \textbf{betreten(Raum1)} (um Standort(Raum1) aus 			$S_{Z-1}$ zu erfüllen):
+    	\begin{align*}
+    	S_{Z-2} = \{\textrm{Standort(Gang), Raum(Raum1), offen(Raum1),}\\ 			\textrm{ Kiste(Kiste3), hält(Kiste3), in(Kiste2, Raum1), 					in(Kiste1, Raum1)}\}
+    	\end{align*}
     \end{enumerate}
 \end{enumerate}
 \end{document}
