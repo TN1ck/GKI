@@ -130,10 +130,9 @@ Johannes Herrmann \> - 341091\\
     	\begin{align*}
     	S_{Z-2} = \{\textrm{Standort(Gang), Raum(Raum1), offen(Raum1),}\\ 			\textrm{ Kiste(Kiste3), hält(Kiste3), in(Kiste2, Raum1), 					in(Kiste1, Raum1)}\}
     	\end{align*}
-    	führen in den Zielzustand, da bei keiner anderen Aktion ein in(k, x) im ADD steht. 
-        \item Es gäbe noch ein weiteres Prädikat, was den Energiezustand des Robotors abfragt. Im Startzustand hätte dieser einen bestimmten Wert und würde in folgenden mit jeder Aktion runtergezählt werden (im PRE wäre er größer 0, im ADD würden wir einen hinzufügen der kleiner ist und im DEL den aktuellen löschen). Wir bräuchten auch arithmetische Operationen um das runterzählen zu bewerkstelligen.
-        \item Wir hätten in beiden Fällen Oberschranken mit wievielen AKtionen wir die Zimmer aufräumen können. Wir würden damit schneller in umögliche Vorgängerzustände (Rückwärtsplanung) bzw. die Baumtiefe bei der Vorwärtsplanung hätte eine endliche Tiefe (Anfangsladezustand).
-    \end{enumerate}
+    	\end{enumerate}
+    \item Es gäbe noch ein weiteres Prädikat, was den Energiezustand des Robotors abfragt. Im Startzustand hätte dieser einen bestimmten Wert und würde in folgenden mit jeder Aktion runtergezählt werden (im PRE wäre er größer 0, im ADD würden wir einen hinzufügen der kleiner ist und im DEL den aktuellen löschen). Wir bräuchten auch arithmetische Operationen um das runterzählen zu bewerkstelligen.
+    \item Wir hätten in beiden Fällen Oberschranken mit wievielen Aktionen wir die Zimmer aufräumen können. Wir würden damit schneller in umögliche Vorgängerzustände kommen, aber auch viel mehr solcher Zustände generieren, sobald die Energie höher als die Anfangsladung ist (Rückwärtsplanung). Die Baumtiefe bei der Vorwärtsplanung hätte eine endliche Tiefe (Anfangsladezustand). Allerdings würde auch die Anzahl der unterschiedlichen Pfade stark steigen, da zum Beispiel der Zustand, nachdem der Roboter eine Kiste in einem Raum aufhebt und sofort wieder hinlegt aufgrund des Energieverbrauchs ein anderer Zustand sein, als der vor dem Ausführen dieser zwei Aktionen. Ohne Energiezustand wären beide Zustände davor und danach gleich, weshalb bei der Vorwärtsplanung der Algorithmus den Pfad nach diesen zwei Aktionen nicht weiter untersuchen würde.
 \end{enumerate}
 \newpage
 \section*{Aufgabe 2}
