@@ -42,4 +42,33 @@ Johannes Herrmann \> - 341091\\
 \end{tabbing}
 
 \section*{Aufgabe 1}
+    Wir definieren folgende Ereignisse:
+    \begin{align*}
+        I_c &:= \text{Das Auto hat die Farbe $c \in \{B,G\}$} \\
+        E_c &:= \text{Das Auto erscheint in der Farbe $c \in \{B, G\}$}
+    \end{align*}
+    Aus dem Text kennen wir folgende Wahrscheinlichkeiten:
+    \begin{align*}
+        P(E_B \mid I_B) &= 0.7 \\
+        P(E_G \mid I_B) &= 0.3
+    \end{align*}
+    \begin{enumerate}[~~a.)]
+        \item Nach Bayes wäre die Rechnung:
+        \begin{align}
+            P(I_B \mid E_B) = \frac{P(E_B\mid P_B) \cdot P(I_B)}{P(E_B)}
+        \end{align}
+        Es ist leicht zu sehen, dass die Wahrscheinlichkeit für $P(I_B)$ bzw. $P(I_G)$ benötigt werden, die wir aber nicht kennen, somit können wir mit den derzeitigen Informationen nicht die wahrscheinlichste Farbe des Autos berechnen.
+        \item Nun kennen wir:
+        \begin{align*}
+            P(I_B) &= 0.2 \\
+            P(I_G) &= 0.8
+        \end{align*}
+        Aus $(1)$ folgt:
+        \begin{align*}
+            P(I_B \mid E_B) &= \frac{P(E_B\mid P_B) \cdot P(I_B)}{P(E_B \mid I_B) \cdot P(I_B) + P(E_B \mid I_G) \cdot P(I_G)} \\
+            &= \frac{0.7 \cdot 0.2}{0.7 \cdot 0.2 + 0.3 \cdot 0.8} \\
+            &= \frac{0.14}{0.14 + 0.24} = \frac{0.14}{0.38} = 0.368
+        \end{align*}
+        Die Gegenwahrscheinlichkeit $P(I_G \mid E_B)$ ist damit $0.632$, womit es fast doppelt so Wahrscheinlich ist, dass die Person ein Grünes, anstatt ein Blaues Taxi gesehen hatte.
+    \end{enumerate}
 \end{document}
