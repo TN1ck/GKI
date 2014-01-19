@@ -157,7 +157,6 @@ Also muss der Einsatz 12.25euro betragen, damit das Spiel fair ist.
             %&=\frac{(0,9\cdot 0,6+0,1\cdot 0,4)\cdot 0,2\cdot 0,66}{0,2\cdot 0,66}=0,58
             &=0,9\cdot 0,6+0,1\cdot 0,4=0,58
             \end{align*}
-            \end{comment}
             \begin{align*}
             P(K,F,W,Z,C)=&P(K)P(F|K)P(W)P(Z|W,K)P(C|F,Z)\\
             P(C=w,K=w,Z=f)=&P(K=w)P(F=w|K=w)P(W=w)P(Z=f|W=w,K=w)P(C=w|F=w,Z=f)\\
@@ -176,6 +175,10 @@ Also muss der Einsatz 12.25euro betragen, damit das Spiel fair ist.
             =& 0.02968\\
             P(K=w,Z=f)=&P(C=w,K=w,Z=f)+P(C=f,K=W,Z=f)=0.07672+0.02968=0.1064\\
             P(C=w|K=w,Z=f)=&\frac{P(C=w,K=w,Z=f)}{P(K=w,Z=f)} =\frac{0.07672}{0.1064}
+            \end{align*}
+            \end{comment}
+            \begin{align*}
+                P(C=w|K=w,Z=f) &= \frac{\sum_{W,F} [P(K)P(W)P(F|K)P(Z|K,W)P(C|F,Z)]}{\sum_{C,W,F} [P(K)P(W)P(F|K)P(Z|K,W)P(C|F,Z)]}\\
             \end{align*}
         \item
             \begin{align*}
