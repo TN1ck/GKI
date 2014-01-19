@@ -72,14 +72,35 @@ Johannes Herrmann \> - 341091\\
         Die Gegenwahrscheinlichkeit $P(I_G \mid E_B)$ ist damit $0.632$, womit es fast doppelt so Wahrscheinlich ist, dass die Person ein Grünes, anstatt ein Blaues Taxi gesehen hatte.
     \end{enumerate}
 \section*{Aufgabe 2}
+	\begin{enumerate}[~~a.)]
+	 \item
+		\begin{align*}
+			&P(X=x, E_{1} = e_{1}, E_{2} = e_{2}, ... , K_{1} = k_{1}, K_{2} = k_{2}, ... , C_{1} = c_{1}, C_{2} = c_{2}, ... , Z_{1} = z_{1}, Z_{2} = z_{2}, ...) \\
+			&= P(X=x | E_{1} = e_{1}, E_{2} = e_{2}, ...) *
+			\prod_{i} P(E_{i}=e_{i} | eltern(E_{i})) *
+			\prod_{j} P(K_{j}=k_{j} | eltern(K_{j})) \\
+			&* \prod_{l} P(C_{l}=c_{l} | eltern(C_{l})) *
+			\prod_{m} P(Z_{m}=z_{m} | eltern(Z_{m}))\\
+		\end{align*}
+	 	mit:
+	 	\begin{align*}
+			eltern(E_{i}) &\subseteq \{C_{1} = c_{1}, C_{2} = c_{2}, ... , Z_{1} = z_{1}, Z_{2} = z_{2}, ...\} \\
+			eltern(K_{j}) &\subseteq \{X = x, C_{1} = c_{1}, C_{2} = c_{2}, ...\} \text{und} X \in eltern(K_{j}) \\
+			eltern(C_{l}) &\subseteq \{E_{1} = e_{1}, E_{2} = e_{2}, ... , K_{1} = k_{1}, K_{2} = k_{2}, ... , C_{1} = c_{1}, C_{2} = c_{2}, ... , Z_{1} = z_{1}, Z_{2} = z_{2}, ...\} \\
+			eltern(Z_{m}) &\subseteq \{E_{1} = e_{1}, E_{2} = e_{2}, ... , K_{1} = k_{1}, K_{2} = k_{2}, ... , C_{1} = c_{1}, C_{2} = c_{2}, ... , Z_{1} = z_{1}, Z_{2} = z_{2}, ...\} \\
+		\end{align*}	
+		
+	 \item 			
+	\end{enumerate}
 \section*{Aufgabe 3}
 Sei
 \begin{align*}
     X &:= \text{Das Produkt der Augenzahlen der zwei Würfel} \\
     Y &:= \text{Die Augenzahl eines Würfel}
 \end{align*}
-Das Spiel ist fair, wenn der Erwartungswert von $X$ gleich dem Einsatz ist, dann ist der Gewinn/Verlust der Spieler 0euro. Es ist offensichtlich das $X$ sich ergibt, wenn die Erwartungswerte der Augenzahl beider Würfel multipliziert wird, somit ergibt sich:
+Das Spiel ist fair, wenn der Erwartungswert von $X$ gleich dem Einsatz ist, dann ist der Gewinn/Verlust der Spieler 0euro. Es ist offensichtlich das $X$ sich ergibt, wenn die Erwartungswerte der Augenzahl beider Würfel multipliziert wird und dass das Werfen zweier Würfel unabhängige Ereignisse sind, somit ergibt sich:
 \begin{align*}
+    E(X) = E(Y*Y) \\
     E(X) = E(Y) \cdot E(Y) \\
     E(X) = 3.5 \cdot 3.5 \\
     E(X) = 12.25
