@@ -87,7 +87,23 @@ Das Spiel ist fair, wenn der Erwartungswert von $X$ gleich dem Einsatz ist, dann
 Also muss der Einsatz 12.25euro betragen, damit das Spiel fair ist.
 \section*{Aufgabe 4}
     \begin{enumerate}[~~a.)]
-        \item
+        \item ~\\
+         \begin{center}
+            \begin{tikzpicture}[auto,bend angle=30,node distance=2cm]
+                % Zustaende
+                \node[state] (1) {K};
+                \node[state] (2)[below right of=1] {Z};
+                \node[state] (3)[below left of=2] {W};
+                \node[state] (4)[above right of=2] {F};
+                \node[state] (5)[below right of=4] {C};
+
+                \path[->] (1) edge  (2);
+                \path[->] (3) edge  (2);
+                \path[->] (2) edge  (5);
+                \path[->] (1) edge  (4);
+                \path[->] (4) edge  (5);
+            \end{tikzpicture}
+        \end{center}
         \item
         \item
         \item
