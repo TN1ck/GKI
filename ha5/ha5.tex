@@ -48,7 +48,24 @@ Johannes Herrmann \> - 341091\\
     \begin{enumerate}[~~a.)]
         \item
         \item
+            \begin{align*}
+            %P(Z=f|K=w)&= \sum\limits_{x\in \{w,f\}}^{} P(Z=f|K=w,W=x) \cdot P(W=x)\\
+            %&=P(Z=f|K=w,W=w)\cdot P(W=w)+P(Z=f|K=w,W=f)\cdot P(W=f)\\
+            %&=0,9\cdot 0,4+0,5\cdot 0,6=0,36+0,3=0,66\\
+            %P(C=w|K=w,Z=f)&=\frac{P(C=w,K=w,Z=f)}{P(K=w,Z=F)}\\
+            P(C=w|K=w,Z=f)&=\sum\limits_{y\in \{w,f\}}^{} (P(C=w|F=y,Z=f)\cdot P(F=y|K=w))\\
+            %&=\frac{\sum\limits_{y\in \{w,f\}}^{} (P(C=w|F=y,Z=f)\cdot P(F=y|K=w))\cdot P(K=w) \cdot P(Z=w|K=w)}{P(K=w) \cdot P(Z=w|K=w)}\\
+            &=P(C=w|F=w,Z=f)\cdot P(F=w|K=w)+P(C=w|F=f,Z=f)\cdot P(F=f|K=w)\\
+            %&=\frac{(0,9\cdot 0,6+0,1\cdot 0,4)\cdot 0,2\cdot 0,66}{0,2\cdot 0,66}=0,58
+            &=0,9\cdot 0,6+0,1\cdot 0,4=0,58
+            \end{align*}
         \item
+            \begin{align*}
+            P(K=w|F=w)&=\frac{P(K=w,F=w)}{P(F=w)}\\
+            &=\frac{P(K=w)\cdot P(F=w|K=w)}{\sum\limits_{k\in \{w,f\}}^{} P(F=w|K=k)}\\
+            &=\frac{P(K=w)\cdot P(F=w|K=w)}{P(F=w|K=w)+P(F=w|K=f)}\\
+            &=\frac{0,2 \cdot 0,6}{0,6+0,1} \approx 0,1714
+            \end{align*}
         \item
     \end{enumerate}
 \end{document}
