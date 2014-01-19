@@ -69,17 +69,57 @@ Johannes Herrmann \> - 341091\\
             &= \frac{0.7 \cdot 0.2}{0.7 \cdot 0.2 + 0.3 \cdot 0.8} \\
             &= \frac{0.14}{0.14 + 0.24} = \frac{0.14}{0.38} = 0.368
         \end{align*}
-        Die Gegenwahrscheinlichkeit $P(I_G \mid E_B)$ ist damit $0.632$, womit es fast doppelt so Wahrscheinlich ist, dass die Person ein Grünes, anstatt ein Blaues Taxi gesehen hatte.
+        Die Gegenwahrscheinlichkeit $P(I_G \mid E_B)$ ist damit $0.632$, womit es fast doppelt so wahrscheinlich ist, dass die Person ein grünes, anstatt ein blaues Taxi gesehen hatte.
     \end{enumerate}
 \section*{Aufgabe 2}
+	\begin{enumerate}[~~a.)]
+	 \item
+		\begin{align*}
+			&P(X=x, E_{1} = e_{1}, E_{2} = e_{2}, ... , K_{1} = k_{1}, K_{2} = k_{2}, ... , C_{1} = c_{1}, C_{2} = c_{2}, ... , Z_{1} = z_{1}, Z_{2} = z_{2}, ...) \\
+			&= P(X=x | E_{1} = e_{1}, E_{2} = e_{2}, ...) *
+			\prod_{i} P(E_{i}=e_{i} | eltern(E_{i})) *
+			\prod_{j} P(K_{j}=k_{j} | eltern(K_{j})) \\
+			&* \prod_{l} P(C_{l}=c_{l} | eltern(C_{l})) *
+			\prod_{m} P(Z_{m}=z_{m} | eltern(Z_{m}))\\
+		\end{align*}
+	 	mit:
+	 	\begin{align*}
+			eltern(E_{i}) &\subseteq \{C_{1} = c_{1}, C_{2} = c_{2}, ... , Z_{1} = z_{1}, Z_{2} = z_{2}, ...\} \\
+			eltern(K_{j}) &\subseteq \{X = x, C_{1} = c_{1}, C_{2} = c_{2}, ...\} \text{und} X \in eltern(K_{j}) \\
+			eltern(C_{l}) &\subseteq \{E_{1} = e_{1}, E_{2} = e_{2}, ... , K_{1} = k_{1}, K_{2} = k_{2}, ... , C_{1} = c_{1}, C_{2} = c_{2}, ... , Z_{1} = z_{1}, Z_{2} = z_{2}, ...\} \\
+			eltern(Z_{m}) &\subseteq \{E_{1} = e_{1}, E_{2} = e_{2}, ... , K_{1} = k_{1}, K_{2} = k_{2}, ... , C_{1} = c_{1}, C_{2} = c_{2}, ... , Z_{1} = z_{1}, Z_{2} = z_{2}, ...\} \\
+		\end{align*}	
+	 \item
+	 Wir nummerieren die einzelnen Produkte aus a) zur besseren Lesbarkeit des Beweises wie folgt:
+	 \begin{align*}
+	 	&(1) P(X=x | E_{1} = e_{1}, E_{2} = e_{2}, ...) \\
+	 	&(2) \prod_{i} P(E_{i}=e_{i} | eltern(E_{i})) \\
+	 	&(3) \prod_{j} P(K_{j}=k_{j} | eltern(K_{j}))\\
+	 	&(4) \prod_{l} P(C_{l}=c_{l} | eltern(C_{l}))\\
+	 	&(5) \prod_{m} P(Z_{m}=z_{m} | eltern(Z_{m}))\\
+	 \end{align*}
+	 	Es gilt:
+	 	\begin{align*}
+	 	&P(X=x | mb(X), Z_{1} = z_{1}, Z_{2} = z_{2}, ...) \\
+	 	&\stackrel{\text{Def. bed. Wkt.}}= \frac{P(X=x , mb(X), Z_{1} = z_{1}, Z_{2} = z_{2}, ...)}{\sum_{x} P(X = x , mb(X), Z_{1} = z_{1}, Z_{2} = z_{2}, ...)}\\
+	 	&\stackrel{\text{Fakt. Verb.-Wkt.}}= \frac{(1)*(2)*(3)*(4)*(5)}{\sum_{x}[(1)*(2)*(3)*(4)*(5)]} \\
+	 	&\stackrel{\text{(2),(4),(5) unabh. v. X}}= \frac{(1)*(2)*(3)*(4)*(5)}{(2)*(4)*(5)*\sum_{x}[(1)*(3)]} \\
+	 	&= \frac{\sum_{z_{1}, z_{2},...}[(2)*(4)*(5)]*(1)*(3)}{\sum_{z_{1}, z_{2},...}[(2)*(4)*(5)]*\sum_{x}[(1)*(3)]} \\	
+	 	&\stackrel{\text{(1),(3) unabh. v. } Z_{m}}= \frac{\sum_{z_{1}, z_{2},...}[(2)*(4)*(5)*(1)*(3)]}{\sum_{z_{1}, z_{2},...}[(2)*(4)*(5)*\sum_{x}[(1)*(3)]]} \\
+	 	&\stackrel{\text{(2),(4),(5) unabh. v. X}}= \frac{\sum_{z_{1}, z_{2},...}[(2)*(4)*(5)*(1)*(3)]}{\sum_{x,z_{1}, z_{2},...}[(2)*(4)*(5)*(1)*(3)]} \\
+	 	&\stackrel{\text{Fakt. Verb.-Wkt.}}= \frac{P(X = x, mb(X))}{mb(X)} \\
+	 	&\stackrel{\text{Def. bed. Wkt.}}=P(X = x | mb(X))
+		\end{align*}	 	 			
+	\end{enumerate}
 \section*{Aufgabe 3}
 Sei
 \begin{align*}
     X &:= \text{Das Produkt der Augenzahlen der zwei Würfel} \\
     Y &:= \text{Die Augenzahl eines Würfel}
 \end{align*}
-Das Spiel ist fair, wenn der Erwartungswert von $X$ gleich dem Einsatz ist, dann ist der Gewinn/Verlust der Spieler 0euro. Es ist offensichtlich das $X$ sich ergibt, wenn die Erwartungswerte der Augenzahl beider Würfel multipliziert wird, somit ergibt sich:
+Das Spiel ist fair, wenn der Erwartungswert von $X$ gleich dem Einsatz ist, dann ist der Gewinn/Verlust der Spieler 0euro. Es ist offensichtlich das $X$ sich ergibt, wenn die Erwartungswerte der Augenzahl beider Würfel multipliziert wird und dass das Werfen zweier Würfel unabhängige Ereignisse sind, somit ergibt sich:
 \begin{align*}
+    E(X) = E(Y*Y) \\
     E(X) = E(Y) \cdot E(Y) \\
     E(X) = 3.5 \cdot 3.5 \\
     E(X) = 12.25
@@ -145,5 +185,15 @@ Also muss der Einsatz 12.25euro betragen, damit das Spiel fair ist.
             &=\frac{0,2 \cdot 0,6}{0,6\cdot 0,+0,1} \approx 0,1714
             \end{align*}
         \item
+        \begin{align*}
+        	&P(W = w | Z = w) \\
+        	&= \frac{\sum_{F,K,C} [P(K) * P(W) * P(F |K) *P(Z|K,W)*P(C|F,Z)]}{\sum_{F,K,C,W} [P(K) * P(W) * P(F |K) *P(Z|K,W)*P(C|F,Z)]}\\
+        	&= \frac{P(W) *\sum_{K} [P(K) *P(Z|K,W) * \sum_{F}[P(F |K) * \sum{C}[P(C|F,Z)]]]}{\sum_{W}[P(W) *\sum_{K} [P(K) *P(Z|K,W) * \sum_{F}[P(F |K) * \sum{C}[P(C|F,Z)]]]]}\\
+        	&\stackrel{\sum_{F}=1,\sum_{C}=1}= \frac{P(W) *\sum_{K} [P(K) *P(Z|K,W)]}{\sum_{W}[P(W) *\sum_{K} [P(K) *P(Z|K,W)]]}\\
+        	&= \frac{P(W = w) * [P(K =w)* P(Z = w|K=w,W=w)+P(K=f)*P(Z=w)|K=f,W=w)]}{\sum_{y \in \{w, f\}}P(W = y) * [P(K =w)* P(Z = w|K=w,W=w)+P(K=f)*P(Z=w)|K=f,W=w)]} \\
+        	&= \frac{0,4* [0,2*0,9+0,8*0,5]}{0,4* [0,2*0,9+0,8*0,5] + 0,6 * [0,2*0,5+0,8*0,1]} \\
+        	&= \frac{0,4*0,58}{0,4*0,58+0,6*0,18} \\
+        	&\approx 0,68
+        \end{align*}
     \end{enumerate}
 \end{document}
