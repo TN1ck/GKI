@@ -105,6 +105,7 @@ Also muss der Einsatz 12.25euro betragen, damit das Spiel fair ist.
             \end{tikzpicture}
         \end{center}
         \item
+            \begin{comment}
             \begin{align*}
             %P(Z=f|K=w)&= \sum\limits_{x\in \{w,f\}}^{} P(Z=f|K=w,W=x) \cdot P(W=x)\\
             %&=P(Z=f|K=w,W=w)\cdot P(W=w)+P(Z=f|K=w,W=f)\cdot P(W=f)\\
@@ -116,12 +117,32 @@ Also muss der Einsatz 12.25euro betragen, damit das Spiel fair ist.
             %&=\frac{(0,9\cdot 0,6+0,1\cdot 0,4)\cdot 0,2\cdot 0,66}{0,2\cdot 0,66}=0,58
             &=0,9\cdot 0,6+0,1\cdot 0,4=0,58
             \end{align*}
+            \end{comment}
+            \begin{align*}
+            P(K,F,W,Z,C)=&P(K)P(F|K)P(W)P(Z|W,K)P(C|F,Z)\\
+            P(C=w,K=w,Z=f)=&P(K=w)P(F=w|K=w)P(W=w)P(Z=f|W=w,K=w)P(C=w|F=w,Z=f)\\
+            +&P(K=w)P(F=f|K=w)P(W=w)P(Z=f|W=w,K=w)P(C=w|F=f,Z=f)\\
+            +&P(K=w)P(F=w|K=w)P(W=f)P(Z=f|W=f,K=w)P(C=w|F=w,Z=f)\\
+            +&P(K=w)P(F=f|K=w)P(W=f)P(Z=f|W=f,K=w)P(C=w|F=f,Z=f)\\
+            =&0.2\cdot 0.6\cdot 0.4\cdot 0.9\cdot 0.9+0.2\cdot 0.4\cdot 0.4\cdot 0.1\cdot 0.2\\
+            +&0.2\cdot 0.6\cdot 0.6\cdot 0.5\cdot 0.9+0.2\cdot 0.4\cdot 0.6\cdot 0.5\cdot 0.2\\
+            =& 0.07672\\
+            P(C=f,K=w,Z=f)=&P(K=w)P(F=w|K=w)P(W=w)P(Z=f|W=w,K=w)P(C=f|F=w,Z=f)\\
+            +&P(K=w)P(F=f|K=w)P(W=w)P(Z=f|W=w,K=w)P(C=f|F=f,Z=f)\\
+            +&P(K=w)P(F=w|K=w)P(W=f)P(Z=f|W=f,K=w)P(C=f|F=w,Z=f)\\
+            +&P(K=w)P(F=f|K=w)P(W=f)P(Z=f|W=f,K=w)P(C=f|F=f,Z=f)\\
+            =&0.2\cdot 0.6\cdot 0.4\cdot 0.9\cdot 0.1+0.2\cdot 0.4\cdot 0.4\cdot 0.1\cdot 0.8\\
+            +&0.2\cdot 0.6\cdot 0.6\cdot 0.5\cdot 0.1+0.2\cdot 0.4\cdot 0.6\cdot 0.5\cdot 0.8\\
+            =& 0.02968\\
+            P(K=w,Z=f)=&P(C=w,K=w,Z=f)+P(C=f,K=W,Z=f)=0.07672+0.02968=0.1064\\
+            P(C=w|K=w,Z=f)=&\frac{P(C=w,K=w,Z=f)}{P(K=w,Z=f)} =\frac{0.07672}{0.1064}
+            \end{align*}
         \item
             \begin{align*}
             P(K=w|F=w)&=\frac{P(K=w,F=w)}{P(F=w)}\\
-            &=\frac{P(K=w)\cdot P(F=w|K=w)}{\sum\limits_{k\in \{w,f\}}^{} P(F=w|K=k)}\\
-            &=\frac{P(K=w)\cdot P(F=w|K=w)}{P(F=w|K=w)+P(F=w|K=f)}\\
-            &=\frac{0,2 \cdot 0,6}{0,6+0,1} \approx 0,1714
+            &=\frac{P(K=w)\cdot P(F=w|K=w)}{\sum\limits_{k\in \{w,f\}}^{} P(F=w|K=k) \cdot P(K=k)}\\
+            &=\frac{P(K=w)\cdot P(F=w|K=w)}{P(F=w|K=w)\cdot P(K=w)+P(F=w|K=f)\cdot P(K=f)}\\
+            &=\frac{0,2 \cdot 0,6}{0,6\cdot 0,+0,1} \approx 0,1714
             \end{align*}
         \item
     \end{enumerate}
