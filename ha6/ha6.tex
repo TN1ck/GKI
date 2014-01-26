@@ -22,6 +22,7 @@ left=1.8cm, right=1.8cm,
 top=2.0cm, bottom=2.0cm]{geometry}
 \usepackage{tabularx}
 \usepackage{tikz}
+\usepackage{cancel}
 \usetikzlibrary{trees,petri,decorations,arrows,automata,shapes,shadows,positioning,plotmarks}
 
 \newcommand{\rf}{\right\rfloor}
@@ -68,13 +69,38 @@ Die Anfangsbedingung wird mit $P(X_0 = w) = 0.5$ angenommen.
     \end{align*}
 \end{comment}
     \item \begin{align*}
-        P(X_{2+1} = w, Y_1 = c, Y_2 = g) = \sum_{X_2} p(X_{2+1} = w \mid X_2)p(X_2 \mid Y_{1:2}) \\
-        = p(X_3 = w \mid X_2 = w)p(X_2 = w \mid Y_{1:2}) + p(X_3 = w \mid X_2 = f)p(X_2 = f \mid Y_{1:2}) \\
-        = p(X_3 = w \mid X_2 = w)\sum_{X_1}p(X_2 = w \mid X_1)p(X_1 \mid Y_1) + p(X_3 = w \mid X_2 = f)p(X_2 = f \mid Y_{1:2}) \\
-        = p(X_3 = w \mid X_2 = w)(p(X_2 = w \mid X_1 = w)p(X_1 = w \mid Y_1) + p(X_2 = w \mid X_1 = f)p(X_1 = f \mid Y_1)) + \\ + p(X_3 = w \mid X_2 = f)p(X_2 = f \mid Y_{1:2}) \\
-        = \dots
-        \end{align*}
+        P(X_1 = w) &= P(X_1 = w|X_0 = f) P(x_0 =f) + P(X_1 = w|x_0 = w) P(X_0 = w)\\
+        &= 0.1 \cdot 0.5 + 0.2 \cdot 0.5) = 0.45\\
+        P(X_1 = f) &= P(X_1 = f|X_0 = f) P(x_0 =f) + P(X_1 = f|x_0 = w) P(X_0 = w)\\
+        &= 0.9 \cdot 0.5 + 0.2 \cdot 0.5 = 0.45\\
+        P(X_1 = w|Y_1 = c) &= \frac{P(X_1 = w, Y_1 = c)}{P(Y_1 = c)}\\
+        &= \frac{P(X_1 = w| Y_1 = c)P(Y_1 = c)}{P(Y_1 = c|X_1 = w)P(X_1 = w)+P(Y_1 = c|X_1 = f)P(X_1 = f)}\\
+        &= \frac{0.3 \cdot 0.45}{0.3 \cdot 0.45 + 0.2 \cdot 0.55} = \frac{0.135}{0.245}\\
+        P(X_1 = f|Y_1 = c) &= \frac{P(X_1 =f,y_1 = c)}{P(Y_1 = c)} = \frac{0.2 \cdot 0.55}{0.3 \cdot 0.45 + 0.2 \cdot 0.55} = \frac{0.11}{0.245}\\
+        P(Y_2 = g|Y_1 = c) &= \sum\limits_{X_2} [P(Y_2 = g|X_2) P(X_2|Y_1 = c)]\\
+        &= \sum\limits_{X_2} [P(Y_2 = g) \sum\limits_{X_1} [P(X_2|X_1)P(X_1|Y_1 = c)]]\\
+        &= 0.3(0.8 \frac{0.135}{0.245} + 0.1 \frac{0.11}{0.245}) + 0.2(0.2 \frac{0.135}{0.245} + 0.9 \frac {0.11}{0.245}) = \frac{0.0609}{0.245}\\
+        P(X_2 = w|Y_2 = g,Y_1 = c) &= \frac{P(X_2 = w, Y_2 = g, Y_1 = c)}{P(Y_2 = g, Y_1 = c)}\\
+        &= \frac{P(Y_2 = g|X_2 = w) P(X_2 = w|Y_1 =c)\cancel{P(Y_1 = c)}}{P(Y_2 = g|Y_1 = c)\cancel{P(Y_1 = c)}}\\
+        &= \frac{P(Y_2 = g|X_2 = w) \sum\limits_{X_1} [P(X_2 = w|X_1)P(X_1|Y_1 = c)]}{P(Y_2 = g|Y_1 = c)}\\
+        &= \frac{0.3(0.8 \frac{0.135}{0.245} + 0.1 \frac{0.11}{0.245})}{\frac{0.0609}{0.245}}\\
+        &= \frac{\frac{0.0357}{\cancel{0.245}}}{\frac{0.0609}{\cancel{0.245}}} = \frac{0.0357}{0.0609}\\
+        P(X_2 = f|Y_2 = g,Y_1 = c) &=\frac{0.2(0.2 \frac{0.135}{0.245} + 0.9 \frac {0.11}{0.245})}{\frac{0.0609}{0.245}}\\
+        &=\frac{\frac{0.0252}{\cancel{0.245}}}{\frac{0.0609}{\cancel{0.245}}} = \frac{0.0252}{0.0609}\\
+        P(X_3 = w| Y_2 = g, Y_1 = c) &= \sum\limits_{X_2} [P(X_3 = w|X_2) P(X_2|Y_2 = g, Y_1 = c)]\\
+        &= 0.8 \frac{0.0357}{0.0609} + 0.1 \frac{0.0252}{0.0609} = \frac{0.03108}{0.0609} \approx 0.51\\
+        P(X_3 = f| Y_2 = g, Y_1 = c) &= \sum\limits_{X_2} [P(X_3 = f|X_2) P(X_2|Y_2 = g, Y_1 = c)]\\
+        &= 0.2 \frac{0.0357}{0.0609} + 0.9 \frac{0.0252}{0.0609} = \frac{0.02982}{0.0609}\\
+        P(X_4 = w| Y_2 = g, Y_1 = c) &= \sum\limits_{X_3} [P(X_4 = w|X_3) P(X_3|Y_2 = g, Y_1 = c)]\\
+        &= 0.8 \frac{0.03108}{0.0609} + 0.1 \frac{0.02982}{0.0609} = \frac{0.027846}{0.0609} \approx 0.46\\
+    \end{align*}
     \item
+    \begin{align*}
+        P(X_1 = w| Y_1 = c, Y_2 = g) &= \frac{P(Y_2 = g|X_1 = w)P(X_1 = w|Y_1 = c)}{\sum\limits_{X_1} [P(Y_2 = g|X_1) P(X_1|Y_1 = c)]}\\
+        &= \frac{\sum\limits_{X_2} [P(X_2|X_1 = w)P(Y_2 = g|X_2))P(X_1 = w|y_1 = c)]}{\sum\limits_{X_1} [\sum\limits_{X_2} [P(X_2|X_1)P(Y_2 = g|X_2)]P(X_1|Y_1 = c)]}\\
+        &= \frac{(0.8 \cdot 0.3 + 0.2 \cdot 0.2) \frac{0.135}{0.245}}{((0.8 \cdot 0.3 + 0.2 \cdot 0.2) \frac{0.135}{0.245}) + ((0.1 \cdot 0.3 + 0.9 \cdot 0.2) \frac{0.11}{0.245})}\\
+        &\approx 0.62\\
+    \end{align*}
     \item
 	\begin{align*}
 		m(w,0) &= P(X_0 = w) = 0,5 \\
