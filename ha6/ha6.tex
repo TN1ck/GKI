@@ -74,48 +74,47 @@ Die Anfangsbedingung wird mit $P(X_0 = w) = 0.5$ angenommen.
     \begin{center}
         \begin{tikzpicture}[auto,bend angle=30,node distance=1.5cm]
             % Zustaende
-            \node[state] (1) {(};
-            \node[state] (2)[right of=1] {x};
-            \node[state] (3)[right of=2] {y};
-            \node[state] (4)[right of=3] {z};
-            \node[state] (5)[right of=4] {0};
-            \node[state] (6)[right of=5] {1};
-            \node[state] (7)[right of=6] {2};
-            \node[state] (8)[right of=7] {3};
-            \node[state] (9)[right of=8] {+};
-            \node[state] (10)[right of=9] {-};
-            \node[state] (11)[right of=10] {)};
+            % \node[state] (1) {(};
+            % \node[state] (2)[right of=1] {x};
+            % \node[state] (3)[right of=2] {y};
+            % \node[state] (4)[right of=3] {z};
+            % \node[state] (5)[right of=4] {0};
+            % \node[state] (6)[right of=5] {1};
+            % \node[state] (7)[right of=6] {2};
+            % \node[state] (8)[right of=7] {3};
+            % \node[state] (9)[right of=8] {+};
+            % \node[state] (10)[right of=9] {-};
+            % \node[state] (11)[right of=10] {)};
 
-            \node[state] (12)[below of=1] {$k_1$};
-            \node[state] (13)[below of=3] {$v$};
-            \node[state] (14)[below of=6] {$z_1$};
-            \node[state] (15)[below of=8] {$z_2$};
-            \node[state] (16)[below of=9] {$rs$};
-            \node[state] (17)[below of=11] {$k_2$};
-            \node[state] (18)[below of=12] {start};
-            \node[state] (19)[below of=17] {end};
+            \node[state] (12)[] {$k_1$};
+            \node[state] (13)[right of=12] {$v$};
+            \node[state] (14)[right of=13] {$z_1$};
+            \node[state] (15)[right of=14] {$z_2$};
+            \node[state] (16)[right of=15] {$rs$};
+            \node[state] (17)[right of=16] {$k_2$};
+            \node[state] (18)[above of=12] {start};
+            \node[state] (19)[above of=17] {end};
 
-            \path[->] (12) edge  (1);
             \path[->] (18) edge  (12);
             \path[->] (17) edge  (19);
 
-            \path[->] (13) edge  (2);
-            \path[->] (13) edge  (3);
-            \path[->] (13) edge  (4);
+            % \path[->] (13) edge  (2);
+            % \path[->] (13) edge  (3);
+            % \path[->] (13) edge  (4);
             
-            \path[->] (14) edge  (6);
-            \path[->] (14) edge  (7);
-            \path[->] (14) edge  (8);
+            % \path[->] (14) edge  (6);
+            % \path[->] (14) edge  (7);
+            % \path[->] (14) edge  (8);
 
-            \path[->] (15) edge  (5);
-            \path[->] (15) edge  (6);
-            \path[->] (15) edge  (7);
-            \path[->] (15) edge  (8);
+            % \path[->] (15) edge  (5);
+            % \path[->] (15) edge  (6);
+            % \path[->] (15) edge  (7);
+            % \path[->] (15) edge  (8);
 
-            \path[->] (16) edge  (9);
-            \path[->] (16) edge  (10);
+            % \path[->] (16) edge  (9);
+            % \path[->] (16) edge  (10);
 
-            \path[->] (17) edge  (11);
+            % \path[->] (17) edge  (11);
             
             \path[->] (12) edge  (13);
             \path[->, bend right] (12) edge  (14);
