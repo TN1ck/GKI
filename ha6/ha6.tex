@@ -48,7 +48,15 @@ Die Anfangsbedingung wird mit $P(X_0 = w) = 0.5$ angenommen.
     P(X_1 = \dots = X_k = w, X_{k+1} = f \mid X_0 = f) &= P(X_{k+1} = f \mid X_{k} = w) \cdot \prod_{i = 1}^{k}P(X_{i+1} = w \mid X_i = w) \cdot P(X_1 = w \mid X_0 = f)\\
     &= 0.2 \cdot 0.8^{k-1} \cdot 0.1
     \end{align*}
-    \item
+    \item \begin{align*}
+        p_t &= P(X_t \mid Y_{1:t}) \\
+        &= \alpha p(X_t, Y_t \mid Y_{1:t-1}) = \alpha p(Y_{t} \mid X_{t}, Y_{1:t-1})p(x_{t}, e_{1:t-1}) \\
+        &= \alpha p(Y_t, X_t)p(X_t, Y_{1:t-1}) \\
+        p(X_t\mid Y_{1:t-1}) &= \sum_{x_t} p(X_{t}, X_t \mid Y_{1:t-1}) = \sum_{x_t}p(X_t\mid X_{t -1})p(X_t\mid Y_{1:t}) \\
+        p(X_t \mid Y_{1:t}) &= \alpha p(Y_t \mid X_t) \sum_{x_t} p(X_t\mid X_{t-1})p(X_t\mid Y_{1:t-1}) \\
+        &= \alpha p(Y_t = g \mid X_t = w) \sum_{x_t} p(X_t\mid X_{t-1})p(X_t\mid Y_{1:t-1}) \\
+        &= \alpha 0.3 \cdot \sum_{x_t} p(X_t\mid X_{t-1})p(X_t\mid Y_{1:t-1})
+    \end{align*}
     \item
     \item
     \item
