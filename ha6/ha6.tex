@@ -143,8 +143,26 @@ Die Anfangsbedingung wird mit $P(X_0 = w) = 0.5$ angenommen.
         &= 1.0  \cdot (0.6 \cdot 0.6) \cdot (0.8 \cdot 0.7) \cdot (0.7 \cdot 0.2) \cdot (0.5 \cdot 0.4) \cdot (0.3 \cdot 1.0) \cdot 1.0 \\
         &= 0.00203
     \end{align*}
-    \item
-    \item
+
+    \item Keine Ahnung wie formal das muss: Ich nehme an, zwei-stellige Zahlen sind ausgeschlossen. Es gibt folgende Möglichkeiten:
+    \begin{itemize}
+        \item $\dots ~rs~ \{x, y, z\} ~rs~ \dots$
+        \item $\dots ~rs~ \{1, 2 ,3\} ~rs~ \dots$
+        \begin{align*}
+            P(~rs~ x ~rs~) &= P(v \mid rs) \cdot P(x \mid v) \cdot P(rs \mid v) = 0.3 \cdot 0.6 \cdot 0.8 = 0.144 \\
+            P(~rs~ y ~rs~) &= 0.3 \cdot 0.3 \cdot 0.8 = 0.72 \\
+            P(~rs~ z ~rs~) &= 0.3 \cdot 0.3 \cdot 0.8 = 0.24 \\
+            P(~rs~ 1 ~rs~) &= 0.7 \cdot 0.5 \cdot 0.3 = 0.105 \\
+            P(~rs~ 2 ~rs~) &= 0.7 \cdot 0.3 \cdot 0.3 = 0.063 \\
+            P(~rs~ 3 ~rs~) &= 0.7 \cdot 0.2 \cdot 0.3 = 0.042 \\
+        \end{align*}
+
+        Somit ist die Variable $x$ am wahrscheinlichsten. Die Aussage sollte mit einer Wahrscheinlichkeit von $\frac{0.144}{0.144 + 0.72 + 0.24 + 0.105 + 0.063 + 0.042} = 0.1095$ zutreffen.
+
+    \end{itemize}
+    \item Die Möglichkeiten wären $(z_1, z_2) z_1 \in \{0,1,2\}, z_2 \in \{0,1,2,3\}$ bzw. $start~k_1 z_1 z_2 k_2~stop$
+    $$P(x_5 = sto,x_4 = k_2, x_3 = z_2, x_2 = z_1, x_1 = k_1, x_0 = sta) = 1.0 \cdot 0.4 \cdot 0.5 \cdot 0.3 \cdot 1.0 = 0.08$$
+    8\% ist die Wahrscheinlichkeit das ein mathematischer Ausdruck mit genau 4 Zeichen auftritt.
 \end{enumerate}
 
 
