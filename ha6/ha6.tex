@@ -95,6 +95,12 @@ Die Anfangsbedingung wird mit $P(X_0 = w) = 0.5$ angenommen.
         &= 0.8 \frac{0.03108}{0.0609} + 0.1 \frac{0.02982}{0.0609} = \frac{0.027846}{0.0609} \approx 0.46\\
     \end{align*}
     \item
+    \begin{align*}
+        P(X_1 = w| Y_1 = c, Y_2 = g) &= \frac{P(Y_2 = g|X_1 = w)P(X_1 = w|Y_1 = c)}{\sum\limits_{X_1} [P(Y_2 = g|X_1) P(X_1|Y_1 = c)]}\\
+        &= \frac{\sum\limits_{X_2} [P(X_2|X_1 = w)P(Y_2 = g|X_2))P(X_1 = w|y_1 = c)]}{\sum\limits_{X_1} [\sum\limits_{X_2} [P(X_2|X_1)P(Y_2 = g|X_2)]P(X_1|Y_1 = c)]}\\
+        &= \frac{(0.8 \cdot 0.3 + 0.2 \cdot 0.2) \frac{0.135}{0.245}}{((0.8 \cdot 0.3 + 0.2 \cdot 0.2) \frac{0.135}{0.245}) + ((0.1 \cdot 0.3 + 0.9 \cdot 0.2) \frac{0.11}{0.245})}\\
+        &\approx 0.62\\
+    \end{align*}
     \item
 	\begin{align*}
 		m(w,0) &= P(X_0 = w) = 0,5 \\
