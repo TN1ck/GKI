@@ -57,14 +57,86 @@ Die Anfangsbedingung wird mit $P(X_0 = w) = 0.5$ angenommen.
         &= \alpha p(Y_t = g \mid X_t = w) \sum_{x_t} p(X_t\mid X_{t-1})p(X_t\mid Y_{1:t-1}) \\
         &= \alpha 0.3 \cdot \sum_{x_t} p(X_t\mid X_{t-1})p(X_t\mid Y_{1:t-1})
     \end{align*}
-    \item
+    \item \begin{align*}
+        P(X_{2+1} = w, Y_1 = c, Y_2 = g) = \sum_{X_2} p(X_{2+1} = w \mid X_2)p(X_2 \mid Y_{1:2}) \\
+        = p(X_3 = w \mid X_2 = w)p(X_2 = w \mid Y_{1:2}) + p(X_3 = w \mid X_2 = f)p(X_2 = f \mid Y_{1:2}) \\
+        = p(X_3 = w \mid X_2 = w)\sum_{X_1}p(X_2 = w \mid X_1)p(X_1 \mid Y_1) + p(X_3 = w \mid X_2 = f)p(X_2 = f \mid Y_{1:2}) \\
+        = p(X_3 = w \mid X_2 = w)(p(X_2 = w \mid X_1 = w)p(X_1 = w \mid Y_1) + p(X_2 = w \mid X_1 = f)p(X_1 = f \mid Y_1)) + \\ + p(X_3 = w \mid X_2 = f)p(X_2 = f \mid Y_{1:2}) \\
+        = \dots
+    \end{align*}
     \item
     \item
 \end{enumerate}
 
 \section*{Aufgabe 2 - Hidden Markov-Modell}
 \begin{enumerate}[~~(a)]
-    \item 
+    \item ~\\
+    \begin{center}
+        \begin{tikzpicture}[auto,bend angle=30,node distance=1.5cm]
+            % Zustaende
+            \node[state] (1) {(};
+            \node[state] (2)[right of=1] {x};
+            \node[state] (3)[right of=2] {y};
+            \node[state] (4)[right of=3] {z};
+            \node[state] (5)[right of=4] {0};
+            \node[state] (6)[right of=5] {1};
+            \node[state] (7)[right of=6] {2};
+            \node[state] (8)[right of=7] {3};
+            \node[state] (9)[right of=8] {+};
+            \node[state] (10)[right of=9] {-};
+            \node[state] (11)[right of=10] {)};
+
+            \node[state] (12)[below of=1] {$k_1$};
+            \node[state] (13)[below of=3] {$v$};
+            \node[state] (14)[below of=6] {$z_1$};
+            \node[state] (15)[below of=8] {$z_2$};
+            \node[state] (16)[below of=9] {$rs$};
+            \node[state] (17)[below of=11] {$k_2$};
+            \node[state] (18)[below of=12] {start};
+            \node[state] (19)[below of=17] {end};
+
+            \path[->] (1) edge  (12);
+            \path[->] (18) edge  (12);
+            \path[->] (17) edge  (19);
+
+            \path[->] (2) edge  (13);
+            \path[->] (3) edge  (13);
+            \path[->] (4) edge  (13);
+            
+            \path[->] (5) edge  (14);
+            \path[->] (6) edge  (14);
+            \path[->] (7) edge  (14);
+
+            \path[->] (5) edge  (15);
+            \path[->] (6) edge  (15);
+            \path[->] (7) edge  (15);
+            \path[->] (8) edge  (15);
+
+            \path[->] (9) edge  (16);
+            \path[->] (10) edge  (16);
+
+            \path[->] (11) edge  (17);
+            
+            \path[->] (12) edge  (13);
+            \path[->, bend right] (12) edge  (14);
+
+            \path[->, bend right] (13) edge  (16);
+            \path[->, bend right] (13) edge  (17);
+
+            \path[->, bend right] (14) edge  (15);
+            \path[->, bend right] (14) edge  (16);
+            \path[->, bend right] (14) edge  (17);
+
+            \path[->, loop right] (15) edge  (15);
+            \path[->, bend right] (15) edge  (16);
+            \path[->, bend right] (15) edge  (17);
+            
+            \path[->, bend left] (16) edge  (14);
+            \path[->, bend left] (16) edge  (13);
+
+
+        \end{tikzpicture}
+    \end{center}
     \item
     \item
     \item
