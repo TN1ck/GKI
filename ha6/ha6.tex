@@ -138,6 +138,11 @@ Die Anfangsbedingung wird mit $P(X_0 = w) = 0.5$ angenommen.
         \end{tikzpicture}
     \end{center}
     \item
+    \begin{align*}
+        P(x_{0:6} \mid y_{1:6} = (x+30)) &= \frac{P(x_0)\prod_{t=1}^{6}P(y_t\mid x_t)P(x_t\mid x_{t - 1})}{P(y_{1:6} = (x+30))} \\
+        &= \frac{1.0  \cdot (0.6 \cdot 0.6) \cdot (0.8 \cdot 0.7) \cdot (0.7 \cdot 0.2) \cdot (0.5 \cdot 0.4) \cdot (0.3 \cdot 1.0) \cdot 1.0}{P(y_{1:6} = (x+30))} \\
+        &= \frac{0.00203}{P(y_{1:6} = (x+30))}
+    \end{align*}
     \item
     \item
 \end{enumerate}
