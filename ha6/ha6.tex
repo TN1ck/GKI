@@ -42,8 +42,12 @@ Johannes Herrmann \> - 341091\\
 \end{tabbing}
 
 \section*{Aufgabe 1 - Hidden Markov-Prozess}
+Die Anfangsbedingung wird mit $P(X_0 = w) = 0.5$ angenommen.
 \begin{enumerate}[~~(a)]
-    \item 
+    \item \begin{align*}
+    P(X_1 = \dots = X_k = w, X_{k+1} = f \mid X_0 = f) &= P(X_{k+1} = f \mid X_{k} = w) \cdot \prod_{i = 1}^{k}P(X_{i+1} = w \mid X_i = w) \cdot P(X_1 = w \mid X_0 = f)\\
+    &= 0.2 \cdot 0.8^{k-1} \cdot 0.1
+    \end{align*}
     \item
     \item
     \item
