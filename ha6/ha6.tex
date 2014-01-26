@@ -50,7 +50,16 @@ Die Anfangsbedingung wird mit $P(X_0 = w) = 0.5$ angenommen.
     &= 0.1 \cdot 0.8^{k-1} \cdot 0.2
     \end{align*}
     \item \begin{align*}
-        p_t &= P(X_t \mid Y_{1:t}) \\
+        p_t &= P(X_t = w \mid Y_{1:t}) \\
+        p_{t-1} &= P(X_{t-1} = w \mid Y_{1:t-1}) \\
+        P(X_t = w \mid Y_1, ... , Y_t = g) &= \alpha P(Y_t =g \mid X_t = w) \sum_{X_{t-1}} P(X_t = w \mid X_{t-1}) P(X_{t-1} \mid Y_{1:t-1})\\
+        &= \alpha * 0,3 * (0,8*p_{t-1} + 0,1*(1-p_{t-1}))\\
+        &= \alpha * 0,24*p_{t-1} + \alpha * 0,03 - \alpha * 0,03*p_{t-1} \\
+        &= \alpha * (0,21*p_{t-1} + 0,03)\\
+\\
+        \alpha &= \frac{1}{P(Y_t = g \mid Y_{1:t-1})}
+    \end{align*}
+\begin{comment}
         &= \alpha p(X_t, Y_t \mid Y_{1:t-1}) = \alpha p(Y_{t} \mid X_{t}, Y_{1:t-1})p(x_{t}, e_{1:t-1}) \\
         &= \alpha p(Y_t, X_t)p(X_t, Y_{1:t-1}) \\
         p(X_t\mid Y_{1:t-1}) &= \sum_{x_t} p(X_{t}, X_t \mid Y_{1:t-1}) = \sum_{x_t}p(X_t\mid X_{t -1})p(X_t\mid Y_{1:t}) \\
@@ -58,6 +67,7 @@ Die Anfangsbedingung wird mit $P(X_0 = w) = 0.5$ angenommen.
         &= \alpha p(Y_t = g \mid X_t = w) \sum_{x_t} p(X_t\mid X_{t-1})p(X_t\mid Y_{1:t-1}) \\
         &= \alpha 0.3 \cdot \sum_{x_t} p(X_t\mid X_{t-1})p(X_t\mid Y_{1:t-1})
     \end{align*}
+\end{comment}
     \item \begin{align*}
         P(X_1 = w) &= P(X_1 = w|X_0 = f) P(x_0 =f) + P(X_1 = w|x_0 = w) P(X_0 = w)\\
         &= 0.1 \cdot 0.5 + 0.2 \cdot 0.5) = 0.45\\
@@ -86,6 +96,36 @@ Die Anfangsbedingung wird mit $P(X_0 = w) = 0.5$ angenommen.
     \end{align*}
     \item
     \item
+	\begin{align*}
+		m(w,0) &= P(X_0 = w) = 0,5 \\
+		m(f,0) &= P(X_0 = f) = 0,5\\ \\
+		m(w,1) &= P(Y_1 = a \mid X_1 = w) * max_v (P(X_1 = w \mid X_0 = v) * m(v,0)) \\
+		&= 0,2 * max[0,8*0,5;0,1*0,5]\\
+		&= 0,08  (mit X_0 = w)\\
+		m(f,1) &= P(Y_1 = a \mid X_1 = f) * max_v (P(X_1 = f \mid X_0 = v) * m(v,0)) \\
+		&= 0,3 * max[0,2*0,5;0,9*0,5]\\
+		&= 0,135  (mit X_0 = f)\\ \\
+		m(w,2) &= P(Y_2 = c \mid X_2 = w) * max_v (P(X_2 = w \mid X_1 = v) * m(v,1)) \\
+		&= 0,3 * max[0,8*0,08;0,1*0,135]\\
+		&= 0,0192  (mit X_1 = w)\\
+		m(f,2) &= P(Y_2 = a \mid X_2 = f) * max_v (P(X_2 = f \mid X_1 = v) * m(v,1)) \\
+		&= 0,2 * max[0,2*0,08;0,9*0,135]\\
+		&= 0,0243  (mit X_1 = f)\\ \\
+		m(w,3) &= P(Y_3 = g \mid X_3 = w) * max_v (P(X_3 = w \mid X_2 = v) * m(v,2)) \\
+		&= 0,3 * max[0,8*0,0192;0,1*0,0243]\\
+		&= 0,004608  (mit X_2 = w)\\
+		m(f,3) &= P(Y_3 = g \mid X_3 = f) * max_v (P(X_3 = f \mid X_2 = v) * m(v,2)) \\
+		&= 0,2 * max[0,2*0,0192;0,9*0,0243]\\
+		&= 0,004374  (mit X_2 = f)\\ \\
+		m(w,4) &= P(Y_4 = t \mid X_4 = w) * max_v (P(X_4 = w \mid X_3 = v) * m(v,3)) \\
+		&= 0,3 * max[0,8*0,004608;0,1*0,004374]\\
+		&= 0,00073728  (mit X_3 = w)\\
+		m(f,4) &= P(Y_4 = t \mid X_4 = f) * max_v (P(X_4 = f \mid X_3 = v) * m(v,3)) \\
+		&= 0,2 * max[0,2*0,004608;0,9*0,004374]\\
+		&= 0,00118098  (mit X_3 = f)\\ \\
+	\end{align*}
+Es folgt also:
+$X_4 = f, X_3 = f, X_2 = f, X_1 = f, X_0 = f$
 \end{enumerate}
 
 \section*{Aufgabe 2 - Hidden Markov-Modell}
@@ -147,11 +187,11 @@ Die Anfangsbedingung wird mit $P(X_0 = w) = 0.5$ angenommen.
             \path[->, bend right] (14) edge  (17);
 
             \path[->, loop right] (15) edge  (15);
-            \path[->, bend right] (15) edge  (16);
+            \path[->, bend left] (15) edge  (16);
             \path[->, bend right] (15) edge  (17);
             
-            \path[->, bend left] (16) edge  (14);
-            \path[->, bend left] (16) edge  (13);
+            \path[->, bend right] (16) edge  (14);
+            \path[->, bend right] (16) edge  (13);
 
 
         \end{tikzpicture}
