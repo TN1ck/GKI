@@ -44,24 +44,112 @@ Johannes Herrmann \> - 341091\\
 \section*{Aufgabe 1}
     \begin{enumerate}[~~a.)]
 	 \item
+	 \begin{align*}
+	     &P(\dq TCGCGA \dq \mid X = f) \\
+	     &= P(Y_1 = T \mid X = f) \cdot P(Y_2 = C \mid Y_1 = T, X = f) \cdot P(Y_3 = G \mid Y_2 = C, X = f) \\
+	     &\cdot P(Y_4 = C \mid Y_3 = G, X = f) \cdot P(Y_5 = G \mid Y_4 = C, X = f) \cdot P(Y_6 = A \mid Y_5 = G, X = f) \\
+	     &= 0,25 \cdot 0,24 \cdot 0,08 \cdot 0,25 \cdot 0,08 \cdot 0,25 \\
+	     &= \frac{3}{125000} \approx 0,000024\\
+	     \\ 
+	     &P(\dq TCGCGA \dq \mid X = w) \\
+	     &= P(Y_1 = T \mid X = w) \cdot P(Y_2 = C \mid Y_1 = T, X = w) \cdot P(Y_3 = G \mid Y_2 = C, X = w) \\
+	     &\cdot P(Y_4 = C \mid Y_3 = G, X = w) \cdot P(Y_5 = G \mid Y_4 = C, X = w) \cdot P(Y_6 = A \mid Y_5 = G, X = w) \\
+	     &= 0,25 \cdot 0,36 \cdot 0,27 \cdot 0,34 \cdot 0,27 \cdot 0,16 \\
+	     &\approx 0,000357
+	 \end{align*}
+	 Gemäß der Maximum-Likelihood-Methode würden wir uns also für das Modell $X = w$ entscheiden, also sagen, dass die DNA-Sequenz teil einer CpG-Insel ist.
 	 
 	 \item
+	 Wir müssen berechnen:
+	 \begin{align*}
+	     P(X = w \mid \dq TCGCGA \dq) = \frac{P(\dq TCGCGA \dq \mid X = w) \cdot P(X = w)}{\sum_X P(\dq TCGCGA \dq \mid X) * P(X)}
+	 \end{align*}
+	 Dazu berechnen wir vorerst:
+	 \begin{align*}
+	     &P(\dq TCGCGA \dq \mid X = f) * P(X = f)\\ &= \frac{3}{125000} \cdot 0,8 = \frac{3}{156250} \approx 0,0000192\\ \\
+	     &P(\dq TCGCGA \dq \mid X = w) * P(X = w)\\
+	     &= 0,000357 \cdot 0,2 \approx 0,0000714
+	 \end{align*}
+	 Nun können wir die Posterior-Wahrscheinlichkeit berechnen:
+	 \begin{align*}
+	     P(X = w \mid \dq TCGCGA \dq) = \frac{0,0000714}{\frac{3}{156250} + 0,0000714} = \frac{119}{151} \approx 0,7881
+	 \end{align*}
+	 Die Posterior-Wahrscheinlichkeit, dass die DNA-Sequenz zu einer CpG-Insel gehört, ist also ungefähr $78,81 \%$.
 	 
 	 \item
+	 \begin{align*}
+	     P(Y_7 = g \mid \dq TCGCGA \dq) &= \sum_X P(Y_7 = g \mid Y_6 = a, X) \cdot  P(X \mid \dq TCGCGA \dq)\\
+	     &= 0,29 \cdot (1-\frac{119}{151}) + 0,43 \cdot \frac{119}{151} = \frac{1209}{3020} \approx 0,40
+	 \end{align*}
 	 
 	 \item
+	 Ja, die Vorhersage würde sich ändern:
+	 $X = w$ ist laut MAP-Methode das wahrscheinlichste Modell. Damit wäre die Vorhersage
+	 \begin{align*}
+	      P(Y_7 = g \mid Y_6 = a, X = w) = 0,43
+	 \end{align*}
+	 etwas optimistischer, dass als nächstes Nukleotid g auftritt, als unsere Vorhersage aus c), die beide Modelle berücksichtigt.
 	\end{enumerate}
 
 \section*{Aufgabe 2}
 	\begin{enumerate}[~~a.)]
 	 \item
+	 Es handelt sich um unabhängige Zufallsexperimente mit einer festen Folge, also kann für die Likelihood eine Binomialverteilung ohne den Parameter $n \choose k$ angenommen werden:
+	 \begin{align*}
+	     P(\text{k Erfolge, 3 Fehlschläge}) = p^k \cdot (1-p)^3
+	 \end{align*}
 	 
 	 \item
+	     Sei $X$ der erwartete Gewinn pro Runde. Da der Einsatz 1 Euro und die Auszahlung 2 Euro sind, ist der Gewinn beim Ereignis Kopf -1 Euro (also ein Verlust von einem Euro) und beim Ereignis Zahl 1 Euro.
+	     Somit ergibt sich der erwartete Gewinn:
+	     \begin{align*}
+	         E(X) = 1 \cdot 0,7 + (-1) \cdot 0,3 = 0,4
+	     \end{align*}
+	     Pro Runde kann also ein Gewinn von 40 Cent erwartet werden.
+	     
+	 \item
+	 Gemäß der Übung wissen wir für die Binomialverteilung (ohne Parameter $n \choose k$) die Form der beiden Hypothesen. Es gilt: \\
+	 Maximum-Likelihood-Hypothese maximal mit:
+	 \begin{align*}
+	     p = \frac{k}{n}
+	 \end{align*}
+	 Maximum-a-posteriori-Hypothese maximal mit:
+	 \begin{align*}
+	     p = \frac{k+(\alpha - 1)}{n+ (\alpha - 1)+(\beta -1)}
+	 \end{align*}
+	 
+	 Wenn wir nun also die Hyperparameter $\alpha = \beta = 1$ setzen, stimmen beide Hypothesen überein:
+	 \begin{align*}
+	     \frac{ k + 1 -1}{n+1-1+1-1} = \frac{k}{n}
+	 \end{align*}
 	 
 	 \item
+	 Für den Posterior des Wurfkunststücks gilt:
+	 \begin{align*}
+	     P(p \mid k, \alpha, \beta) &= \text{Likelihood} \cdot \text{Prior} \\
+	     &= p^k \cdot (1-p)^3 \cdot B(\alpha,\beta) \cdot p^{\alpha-1} \cdot (1-p)^{\beta-1} \\
+	     &= \gamma \cdot p^{k+\alpha - 1} \cdot (1-p)^{\beta + 2} \\
+	     &\text{mit } \gamma = B(\alpha,\beta) 
+	 \end{align*}
+	 Wir nehmen den Logarithmus:
+	 \begin{align*}
+	     log P(p \mid k, \alpha, \beta) &= (k+\alpha-1) \cdot log p + (\beta + 2) \cdot log (1-p) + log \gamma
+	 \end{align*}
+	 Es ergibt sich nun für die Maximum-a-posteriori-Hypothese:
+	 \begin{align*}
+	     \frac{\partial log P(p \mid k,\alpha, \beta)}{\partial p} &= 0 \\
+	     \Leftrightarrow \frac{k+\alpha-1}{p} - \frac{\beta + 2}{1-p} &= 0 \\
+	     \Leftrightarrow \frac{p}{k+\alpha-1} &= \frac{1}{\beta + 2} - \frac{p}{\beta + 2} \\
+	     \Leftrightarrow p \cdot (\frac{1}{k+\alpha-1} + \frac{1}{\beta+2}) &= \frac{1}{\beta+2} \\
+	     \Leftrightarrow P &= \frac{1}{\beta+2 \cdot (\frac{1}{k+\alpha-1} + \frac{1}{\beta+2})} \\ 
+	     \Leftrightarrow p &= \frac{1}{\frac{\beta+2+k+\alpha-1}{k+\alpha-1}} \\
+	     \Leftrightarrow p &= \frac{k+\alpha-1}{k+\alpha+\beta+1}
+	 \end{align*}
 	 
 	 \item
-	 
-	 \item
+	 Mit der Gleichung aus d) ergibt sich:
+	 \begin{align*}
+	     p = \frac{7+3-1}{7+3+4+1} = \frac{9}{15} = 0,6
+	 \end{align*}
 	\end{enumerate}
 \end{document}
