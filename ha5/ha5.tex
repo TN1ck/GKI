@@ -198,7 +198,7 @@ Also muss der Einsatz 12.25euro betragen, damit das Spiel fair ist.
                 P(K=W|F=W) &=\frac{\sum_{W,Z,C} [P(K)P(W)P(F|K)P(Z|K,W)P(C|F,Z)]}{\sum_{K,W,Z,C} [P(K)P(W)P(F|K)P(Z|K,W)P(C|F,Z)]}\\
                 &=\frac{P(K)P(F|K)\sum_W [P(W)\sum_Z [P(Z|K,W) \sum_C [P(C|F,Z)]]]}{\sum_K[P(K)P(F|K)\sum_W [P(W)\sum_Z [P(Z|K,W) \sum_C [P(C|F,Z)]]]]}\\
                 &=\frac{P(K)P(F|K)}{\sum_K[P(K)P(F|K)]}\\
-                &=\frac{P(K=w)P(F=w|K=w)}{\sum_limits_{y\in \{ w,f\}}^{} [P(K=y)P(F=w|K=y)]}\\
+                &=\frac{P(K=w)P(F=w|K=w)}{\sum\limits_{y\in \{ w,f\}}^{} [P(K=y)P(F=w|K=y)]}\\
                 &=\frac{P(K=w)P(F=w|K=w)}{P(K=w)P(F=w|K=w)+P(K=f)P(F=w|K=f)}\\
                 &=\frac{0.2 \cdot 0.6}{0.2 \cdot 0.6 + 0.8 \cdot 0.1}\\
                 &=0.6
