@@ -76,10 +76,34 @@ Johannes Herrmann \> - 341091\\
 \section*{Aufgabe 3}
     \begin{enumerate}[~~a.)]
 	 \item
+	 Die Ausgabe ist abhängig von p: \\ \\
+	 $
+	 a(x) = 
+	 \begin{cases} 
+        1 & ,p > 0,5 \\
+        -1 & ,p < 0,5 \\
+        x \in [-1;1] & ,p = 0,5
+     \end{cases}
+     $\\ \\
+     Für $p = 0,5$ ist der Wert von $E_1$ immer gleich, daher kann die Funktion dann auf einen beliebigen Wert aus dem Intervall abbilden. Dieser muss natürlich fest gewählt werde.
+	 \item
+	 Die gesuchte Funktion ist $E_2$. Denn wenn wir ihr Minimum berechnen, indem wir die erste Ableitung gleich Null setzen, sehen wir, dass wir genau die beschriebene Formel für a(x) erhalten:
+	 \begin{align*}
+	 &E_2' = ( \sum_{i=1}^N |y_i - a(x_i)|^2)' = (p(1-a(x))^2+(1-p)(1+a(x))^2)' = -4p+2a(x)+2 \\
+	 &-4p+2a(x)+2 = 0 \Leftrightarrow a(x) = 2p-1
+	 \end{align*}
 	 
+	% TODO: Beweisen, dass es nur genau ein n gibt!
 	 \item
-	
-	 \item
+	 $p = 0,9$ und $N = 100$ bedeutet wir haben 90 positive und 100 negative Datenpunkte. Für $E_2$ wissen wir, dass das Minimum bei $a(x) = 2p-1$ liegt.\\Also haben wir für unsere Werte ein Minimum bei:\\
+	 $2\cdot 0,9 - 1 = 0,8$!\\
+	 \\
+	 Für $E_3$ bilden wir die Ableitung und setzen gleich Null:
+	 \begin{align*}
+	  &E_3' = ( \sum_{i=1}^N |y_i - a(x_i)|^3)' = (90(1-a(x))^3+10(1+a(x))^3)' = -240 a(x)^2+600 a(x)-240 \\
+	 &-240 a(x)^2+600 a(x)-240 = 0 \Leftrightarrow a(x)_1 = 0,5 \text{ oder } a(x)_2 = 2
+	 \end{align*}
+	 Da für $a(x)$ nur Werte aus dem Intervall $[-1;1]$ in Frage kommen, liegt unser Minimum der kubischen Fehlerfunktion mit den gegebenen Parametern bei $0,5$.
 	 
 	\end{enumerate}
 
