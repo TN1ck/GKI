@@ -44,11 +44,31 @@ Johannes Herrmann \> - 341091\\
 \section*{Aufgabe 1}
     \begin{enumerate}[~~a.)]
 	 \item
+	 Die erste drei Beispiele werden korrekt klassifiziert (wir gehen in der Tabelle von links nach rechts vor): \\
+	 \begin{align*}
+	     &sgn(w_{11} \cdot x_1+w_{12} \cdot x_2 - w_{10}) = sgn((-1) + (-1) + 1) = sgn(-1) = -1 = x_1 \oplus x_2 \\
+	     &sgn(w_{11} \cdot x_1+w_{12} \cdot x_2 - w_{10}) = sgn(1 + (-1) + 1) = sgn(1) = 1 = x_1 \oplus x_2\\
+	     &sgn(w_{11} \cdot x_1+w_{12} \cdot x_2 - w_{10}) = sgn((-1) + 1 + 1) = sgn(1) = 1 = x_1 \oplus x_2
+	 \end{align*}
+	 Nur Beispiel 4 ändert also die Gewichte:
+	 \begin{align*}
+        &w_{20} = w_{10} + \lambda y x_0 = -1 + 0.7 \cdot (-1) \cdot (-1) = -0.3 \\
+        &w_{21} = w_{11} + \lambda y x_1 = 1 + 0.7 \cdot (-1) \cdot 1 = 0.3\\
+        &w_{22} = w_{12} + \lambda y x_2 = 1 + 0.7 \cdot (-1) \cdot 1 = 0.3
+	 \end{align*}
+	 Nun werden wieder die ersten drei Beispiele korrekt klassifiziert, das 4. allerdings immer noch nicht. Da wir jedes Beispiel nur einmal betrachten sollten, können wir nun aufhören.
 	 
 	 \item
-	
-	 \item
+	 Nein, ein Perzeptron alleine kann die XOR-Funktion nicht erlernen, da die Datenpunkte (Beispiele) nicht linear seperabel sind. Ein einzelnes Perzeptron kann allerdings nur linear separable Datensätze komplett korrekt klassifizieren.
 	 
+	 \item
+    Man kann die Funktion $x_1 \oplus x_2$ umformen:
+    \begin{align*}
+        x_1 \oplus x_2 \equiv (\lnot x_1 \land x_2) \lor (x_1 \land \lnot x_2)
+    \end{align*}
+    Das folgende neuronale Netz beschreibt genau diese äquivalente Formel: \\
+        \includegraphics[scale=0.65]{network.jpg} \\
+    Die erste Schicht bilden zwei Neuronen, die die UND-Funktion realisieren und jeweils einen der beiden Inputs invertieren. In der zweiten Schicht hingegen haben wir nur ein Neuron, das die beiden Ausgänge der Neuronen der ersten Schicht durch eine ODER-Funktion zum Ausgabewert 'a' verarbeitet: 
 	\end{enumerate}
 
 \section*{Aufgabe 2}
